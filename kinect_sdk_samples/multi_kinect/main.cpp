@@ -1,4 +1,4 @@
-// •¡”‚ÌKinect‚ÌƒJƒƒ‰‰æ‘œ‚ğ•\¦‚·‚é
+ï»¿// è¤‡æ•°ã®Kinectã®ã‚«ãƒ¡ãƒ©ç”»åƒã‚’è¡¨ç¤ºã™ã‚‹
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -44,10 +44,10 @@ void main()
         bool continue_ = true;
         while ( continue_ ) {
             for ( std::vector< Runtime >::iterator it = runtime.begin(); it != runtime.end(); ++it ) {
-                // ƒf[ƒ^‚ÌXV‚ğ‘Ò‚Â
+                // ãƒ‡ãƒ¼ã‚¿ã®æ›´æ–°ã‚’å¾…ã¤
                 it->kinect->WaitAndUpdateAll();
 
-                // Ÿ‚ÌƒtƒŒ[ƒ€‚Ìƒf[ƒ^‚ğæ“¾‚µ‚Ä•\¦‚·‚é
+                // æ¬¡ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã¦è¡¨ç¤ºã™ã‚‹
                 kinect::nui::VideoFrame videoMD( it->kinect->VideoStream() );
                 memcpy( it->image->imageData, (BYTE*)videoMD.Bits(), videoMD.Pitch() * videoMD.Height() );
                 ::cvShowImage( it->windowName.c_str(), it->image );
