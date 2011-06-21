@@ -1,0 +1,80 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "camera_image", "camera_image\camera_image.vcxproj", "{5443A39C-825F-4863-B90C-46E1044690E6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A} = {16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GetKinectCount", "GetKinectCount\GetKinectCount.vcxproj", "{2223DB1E-735C-4233-AF08-43C8208D51A0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kinect_cpp_wrapper", "..\kinect_cpp_wrapper\build\msvc\kinect_cpp_wrapper.vcxproj", "{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "depth", "depth\depth.vcxproj", "{57A4F035-C5A6-432D-AD22-F579195E3FE4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A} = {16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "depth_map", "depth_map\depth_map.vcxproj", "{57D2B1AD-06BF-4C3D-A62E-42A7A5CC1B2A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A} = {16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "player", "player\player.vcxproj", "{2F69C655-64B8-41E5-AC2E-2FE44EC2BA2D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A} = {16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "skeleton", "skeleton\skeleton.vcxproj", "{FA952CF5-4159-4D83-AB3C-02FD0DC2EF75}"
+	ProjectSection(ProjectDependencies) = postProject
+		{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A} = {16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multi_kinect", "multi_kinect\multi_kinect.vcxproj", "{1288081D-FF7C-423B-8BC6-26922AB380D6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A} = {16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5443A39C-825F-4863-B90C-46E1044690E6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5443A39C-825F-4863-B90C-46E1044690E6}.Debug|Win32.Build.0 = Debug|Win32
+		{5443A39C-825F-4863-B90C-46E1044690E6}.Release|Win32.ActiveCfg = Release|Win32
+		{5443A39C-825F-4863-B90C-46E1044690E6}.Release|Win32.Build.0 = Release|Win32
+		{2223DB1E-735C-4233-AF08-43C8208D51A0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2223DB1E-735C-4233-AF08-43C8208D51A0}.Debug|Win32.Build.0 = Debug|Win32
+		{2223DB1E-735C-4233-AF08-43C8208D51A0}.Release|Win32.ActiveCfg = Release|Win32
+		{2223DB1E-735C-4233-AF08-43C8208D51A0}.Release|Win32.Build.0 = Release|Win32
+		{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}.Debug|Win32.Build.0 = Debug|Win32
+		{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}.Release|Win32.ActiveCfg = Release|Win32
+		{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}.Release|Win32.Build.0 = Release|Win32
+		{57A4F035-C5A6-432D-AD22-F579195E3FE4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{57A4F035-C5A6-432D-AD22-F579195E3FE4}.Debug|Win32.Build.0 = Debug|Win32
+		{57A4F035-C5A6-432D-AD22-F579195E3FE4}.Release|Win32.ActiveCfg = Release|Win32
+		{57A4F035-C5A6-432D-AD22-F579195E3FE4}.Release|Win32.Build.0 = Release|Win32
+		{57D2B1AD-06BF-4C3D-A62E-42A7A5CC1B2A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{57D2B1AD-06BF-4C3D-A62E-42A7A5CC1B2A}.Debug|Win32.Build.0 = Debug|Win32
+		{57D2B1AD-06BF-4C3D-A62E-42A7A5CC1B2A}.Release|Win32.ActiveCfg = Release|Win32
+		{57D2B1AD-06BF-4C3D-A62E-42A7A5CC1B2A}.Release|Win32.Build.0 = Release|Win32
+		{2F69C655-64B8-41E5-AC2E-2FE44EC2BA2D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2F69C655-64B8-41E5-AC2E-2FE44EC2BA2D}.Debug|Win32.Build.0 = Debug|Win32
+		{2F69C655-64B8-41E5-AC2E-2FE44EC2BA2D}.Release|Win32.ActiveCfg = Release|Win32
+		{2F69C655-64B8-41E5-AC2E-2FE44EC2BA2D}.Release|Win32.Build.0 = Release|Win32
+		{FA952CF5-4159-4D83-AB3C-02FD0DC2EF75}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FA952CF5-4159-4D83-AB3C-02FD0DC2EF75}.Debug|Win32.Build.0 = Debug|Win32
+		{FA952CF5-4159-4D83-AB3C-02FD0DC2EF75}.Release|Win32.ActiveCfg = Release|Win32
+		{FA952CF5-4159-4D83-AB3C-02FD0DC2EF75}.Release|Win32.Build.0 = Release|Win32
+		{1288081D-FF7C-423B-8BC6-26922AB380D6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1288081D-FF7C-423B-8BC6-26922AB380D6}.Debug|Win32.Build.0 = Debug|Win32
+		{1288081D-FF7C-423B-8BC6-26922AB380D6}.Release|Win32.ActiveCfg = Release|Win32
+		{1288081D-FF7C-423B-8BC6-26922AB380D6}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

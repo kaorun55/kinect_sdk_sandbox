@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kinect_cpp_wrapper", "build\msvc\kinect_cpp_wrapper.vcxproj", "{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kinect_cpp_wrapper_test", "build\msvc\kinect_cpp_wrapper_test.vcxproj", "{B0AD68BA-2BDC-4B21-8C09-6DFBBA5CD537}"
+	ProjectSection(ProjectDependencies) = postProject
+		{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A} = {16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}.Debug|Win32.Build.0 = Debug|Win32
+		{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}.Release|Win32.ActiveCfg = Release|Win32
+		{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}.Release|Win32.Build.0 = Release|Win32
+		{B0AD68BA-2BDC-4B21-8C09-6DFBBA5CD537}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B0AD68BA-2BDC-4B21-8C09-6DFBBA5CD537}.Debug|Win32.Build.0 = Debug|Win32
+		{B0AD68BA-2BDC-4B21-8C09-6DFBBA5CD537}.Release|Win32.ActiveCfg = Release|Win32
+		{B0AD68BA-2BDC-4B21-8C09-6DFBBA5CD537}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
