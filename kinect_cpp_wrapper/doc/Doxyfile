@@ -27,6 +27,10 @@ GENERATE_HTMLHELP      = YES
 CHM_FILE               = "Kinect SDK C++ Wrapper.chm"
 HHC_LOCATION           = "C:\Program Files (x86)\HTML Help Workshop\hhc.exe"
 
+DOXYFILE_ENCODING = UTF-8
+INPUT_ENCODING = CP932
+CHM_INDEX_ENCODING = CP932
+
 # RTFŠÖ˜A
 GENERATE_RTF           = NO
 
