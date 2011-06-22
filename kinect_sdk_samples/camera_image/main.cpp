@@ -1,7 +1,7 @@
-// ƒAƒNƒeƒBƒu‚ÈKinect‚Ì”‚ğæ“¾‚·‚éƒTƒ“ƒvƒ‹
+ï»¿// ã‚«ãƒ¡ãƒ©ç”»åƒã‚’è¡¨ç¤ºã™ã‚‹ã‚µãƒ³ãƒ—ãƒ«
 #include <iostream>
 
-// MSR_NuiApi.h‚Ì‘O‚ÉWindows.h‚ğƒCƒ“ƒNƒ‹[ƒh‚·‚é
+// MSR_NuiApi.hã®å‰ã«Windows.hã‚’ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã™ã‚‹
 #include <Windows.h>
 #include <MSR_NuiApi.h>
 
@@ -16,43 +16,43 @@
 
 void main()
 {
-    // ‰Šú‰»
+    // åˆæœŸåŒ–
     ERROR_CHECK( ::NuiInitialize( NUI_INITIALIZE_FLAG_USES_COLOR ) );
 
-    // ƒJƒƒ‰ƒnƒ“ƒhƒ‹‚Ìæ“¾
+    // ã‚«ãƒ¡ãƒ©ãƒãƒ³ãƒ‰ãƒ«ã®å–å¾—
     HANDLE imageEvent = ::CreateEvent( 0, TRUE, FALSE, 0 );
     HANDLE streamHandle = 0;
     NUI_IMAGE_RESOLUTION resolution = NUI_IMAGE_RESOLUTION_640x480;
     ERROR_CHECK( ::NuiImageStreamOpen( NUI_IMAGE_TYPE_COLOR, resolution,
                     0, 2, imageEvent, &streamHandle ) );
 
-    // ‰æ–ÊƒTƒCƒY‚ğæ“¾
+    // ç”»é¢ã‚µã‚¤ã‚ºã‚’å–å¾—
     DWORD x = 0, y = 0;
     ::NuiImageResolutionToSize( resolution, x, y );
 
-    // OpenCV‚Ì‰Šúİ’è
+    // OpenCVã®åˆæœŸè¨­å®š
     char* windowName = "camera_image";
     ::cvNamedWindow( windowName );
     cv::Ptr< IplImage > videoImg = ::cvCreateImage( cvSize( x, y ), IPL_DEPTH_8U, 4 );
 
-    // ƒƒCƒ“ƒ‹[ƒv
+    // ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—
     while ( 1 ) {
-        // ƒf[ƒ^‚ÌXV‚ğ‘Ò‚Â
+        // ãƒ‡ãƒ¼ã‚¿ã®æ›´æ–°ã‚’å¾…ã¤
         ::WaitForSingleObject( imageEvent, INFINITE );
 
-        // ƒJƒƒ‰ƒf[ƒ^‚Ìæ“¾
+        // ã‚«ãƒ¡ãƒ©ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
         CONST NUI_IMAGE_FRAME *imageFrame = 0;
         ERROR_CHECK( ::NuiImageStreamGetNextFrame( streamHandle, 0, &imageFrame ) );
 
-        // ‰æ‘œƒf[ƒ^‚Ìæ“¾
+        // ç”»åƒãƒ‡ãƒ¼ã‚¿ã®å–å¾—
         KINECT_LOCKED_RECT rect;
         imageFrame->pFrameTexture->LockRect( 0, &rect, 0, 0 );
 
-        // ƒf[ƒ^‚ÌƒRƒs[‚Æ•\¦
+        // ãƒ‡ãƒ¼ã‚¿ã®ã‚³ãƒ”ãƒ¼ã¨è¡¨ç¤º
         memcpy( videoImg->imageData, (BYTE*)rect.pBits, videoImg->widthStep * videoImg->height );
         ::cvShowImage( windowName, videoImg );
 
-        // ƒJƒƒ‰ƒf[ƒ^‚Ì‰ğ•ú
+        // ã‚«ãƒ¡ãƒ©ãƒ‡ãƒ¼ã‚¿ã®è§£æ”¾
         ERROR_CHECK( ::NuiImageStreamReleaseFrame( streamHandle, imageFrame ) );
 
         int key = ::cvWaitKey( 10 );
@@ -61,7 +61,7 @@ void main()
         }
     }
 
-    // I—¹ˆ—
+    // çµ‚äº†å‡¦ç†
     NuiShutdown();
 
     ::cvDestroyAllWindows();

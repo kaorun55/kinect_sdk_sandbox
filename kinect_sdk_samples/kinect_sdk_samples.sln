@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "camera_image", "camera_image\camera_image.vcxproj", "{04FAFCC8-CA18-4DC3-8722-13ED90C7521C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multi_kinect", "multi_kinect\multi_kinect.vcxproj", "{A226C3A6-DDDC-45C3-9BF4-F9E964518930}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +15,10 @@ Global
 		{04FAFCC8-CA18-4DC3-8722-13ED90C7521C}.Debug|Win32.Build.0 = Debug|Win32
 		{04FAFCC8-CA18-4DC3-8722-13ED90C7521C}.Release|Win32.ActiveCfg = Release|Win32
 		{04FAFCC8-CA18-4DC3-8722-13ED90C7521C}.Release|Win32.Build.0 = Release|Win32
+		{A226C3A6-DDDC-45C3-9BF4-F9E964518930}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A226C3A6-DDDC-45C3-9BF4-F9E964518930}.Debug|Win32.Build.0 = Debug|Win32
+		{A226C3A6-DDDC-45C3-9BF4-F9E964518930}.Release|Win32.ActiveCfg = Release|Win32
+		{A226C3A6-DDDC-45C3-9BF4-F9E964518930}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
