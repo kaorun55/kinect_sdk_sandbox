@@ -11,15 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{5443A39C-825F-4863-B90C-46E1044690E6}</ProjectGuid>
+    <ProjectGuid>{2F69C655-64B8-41E5-AC2E-2FE44EC2BA2D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>camera_image</RootNamespace>
+    <RootNamespace>player</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -50,13 +50,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Program Files (x86)\Microsoft Research KinectSDK\inc;C:\OpenCV2.2\include;../../kinect_cpp_wrapper/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\Microsoft Research KinectSDK\inc;C:\OpenCV2.2\include;../../include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft Research KinectSDK\lib;C:\OpenCV2.2\lib;../../kinect_cpp_wrapper/lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>MSRKinectNUI.lib;opencv_core220d.lib;opencv_highgui220d.lib;kinect_cpp_wrapper_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft Research KinectSDK\lib;C:\OpenCV2.2\lib;../../lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

@@ -11,15 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{57D2B1AD-06BF-4C3D-A62E-42A7A5CC1B2A}</ProjectGuid>
+    <ProjectGuid>{57A4F035-C5A6-432D-AD22-F579195E3FE4}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>depth_map</RootNamespace>
+    <RootNamespace>depth</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -50,12 +50,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Program Files (x86)\Microsoft Research KinectSDK\inc;C:\OpenCV2.2\include;../../kinect_cpp_wrapper/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\Microsoft Research KinectSDK\inc;C:\OpenCV2.2\include;../../include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft Research KinectSDK\lib;C:\OpenCV2.2\lib;../../kinect_cpp_wrapper/lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft Research KinectSDK\lib;C:\OpenCV2.2\lib;../../lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>MSRKinectNUI.lib;opencv_core220d.lib;opencv_highgui220d.lib;kinect_cpp_wrapper_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

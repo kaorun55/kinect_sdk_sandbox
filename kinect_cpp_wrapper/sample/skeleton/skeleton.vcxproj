@@ -50,12 +50,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Program Files (x86)\Microsoft Research KinectSDK\inc;C:\OpenCV2.2\include;../../kinect_cpp_wrapper/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\Microsoft Research KinectSDK\inc;C:\OpenCV2.2\include;../../include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft Research KinectSDK\lib;C:\OpenCV2.2\lib;../../kinect_cpp_wrapper/lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft Research KinectSDK\lib;C:\OpenCV2.2\lib;../../lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>MSRKinectNUI.lib;opencv_core220d.lib;opencv_highgui220d.lib;kinect_cpp_wrapper_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

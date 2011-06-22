@@ -8,7 +8,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "camera_image", "camera_imag
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GetKinectCount", "GetKinectCount\GetKinectCount.vcxproj", "{2223DB1E-735C-4233-AF08-43C8208D51A0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kinect_cpp_wrapper", "..\kinect_cpp_wrapper\build\msvc\kinect_cpp_wrapper.vcxproj", "{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kinect_cpp_wrapper", "..\build\msvc\kinect_cpp_wrapper.vcxproj", "{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "depth", "depth\depth.vcxproj", "{57A4F035-C5A6-432D-AD22-F579195E3FE4}"
 	ProjectSection(ProjectDependencies) = postProject
