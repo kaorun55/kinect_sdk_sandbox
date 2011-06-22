@@ -6,6 +6,11 @@
 
 namespace kinect {
 	namespace nui {
+		/**
+		 * コンストラクタ
+		 *
+		 * @param	index	生成するKinectインスタンスのインデックス
+		 */
 		Kinect::Kinect( int index /*= 0*/ )
             : instance_( Create( index ) )
             , video_( instance_ )
@@ -15,11 +20,19 @@ namespace kinect {
 		{
 		}
 
+		/**
+		 * デストラクタ
+		 */
 		Kinect::~Kinect()
 		{
 			Shutdown();
 		}
 
+		/**
+		 * インスタンスを生成する
+		 *
+		 * @param	index	生成するKinectインスタンスのインデックス
+		 */
         Kinect::NuiInstance Kinect::Create( int index )
         {
 			INuiInstance* instance = 0;
@@ -31,6 +44,11 @@ namespace kinect {
 			return NuiInstance( instance, ::MSR_NuiDestroyInstance );
         }
 
+		/**
+		 * アクティブなKinectの数を取得する
+		 *
+		 * @return	アクティブなKinectの数
+		 */
 		/*static*/ int Kinect::GetActiveCount()
 		{
 			int count = 0;
@@ -42,6 +60,15 @@ namespace kinect {
 			return count;
 		}
 
+		/**
+		 * Kinectの初期化
+		 *
+		 * @param	dwFlags	初期化フラグ
+		 *	@arg	NUI_INITIALIZE_FLAG_USES_DEPTH_AND_PLAYER_INDEX	距離とユーザーを取得する
+		 *	@arg	NUI_INITIALIZE_FLAG_USES_DEPTH_AND_PLAYER_INDEX	距離とユーザーを取得する
+		 *	@arg	NUI_INITIALIZE_FLAG_USES_DEPTH_AND_PLAYER_INDEX	距離とユーザーを取得する
+		 *	@arg	NUI_INITIALIZE_FLAG_USES_DEPTH_AND_PLAYER_INDEX	距離とユーザーを取得する
+		 */
 		void Kinect::Initialize( DWORD dwFlags )
 		{
 			HRESULT ret = instance_->NuiInitialize( dwFlags );
