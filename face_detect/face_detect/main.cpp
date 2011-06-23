@@ -1,4 +1,4 @@
-// ’†S‚Ì‹——£‚ğ•\¦‚·‚éƒTƒ“ƒvƒ‹
+ï»¿// é¡”ã‚’æ¤œå‡ºã—ã¦ã€ã‚«ãƒ¡ãƒ©ã®è§’åº¦ã‚’å‹•ã‹ã™ã‚µãƒ³ãƒ—ãƒ«
 #include <iostream>
 #include <sstream>
 
@@ -21,58 +21,58 @@ void main()
         kinect::nui::ImageStream& depth = kinect.DepthStream();
         depth.Open( NUI_IMAGE_TYPE_DEPTH_AND_PLAYER_INDEX, NUI_IMAGE_RESOLUTION_320x240 );
 
-        // OpenCV‚Ì‰Šúİ’è
-        char* windowName = "player";
+        // OpenCVã®åˆæœŸè¨­å®š
+        char* windowName = "camera_elevation";
         ::cvNamedWindow( windowName );
         cv::Ptr< IplImage > videoImg = ::cvCreateImage( cvSize(video.Width(), video.Height()), IPL_DEPTH_8U, 4 );
 
-        // ‰æ‘œ‚ğ“Ç‚İ‚ñ‚ÅKinect‚É‚ ‚í‚¹‚Ä•ÏŠ·‚·‚é
+        // ç”»åƒã‚’èª­ã¿è¾¼ã‚“ã§Kinectã«ã‚ã‚ã›ã¦å¤‰æ›ã™ã‚‹
         cv::Ptr< IplImage > face = ::cvLoadImage( "lena.jpg" );
         cv::Ptr< IplImage > faceImg = ::cvCreateImage( cvSize(face->width, face->height), IPL_DEPTH_8U, 4 );
         ::cvCvtColor( face, faceImg, CV_RGB2RGBA ); 
 
-        // ŒŸoŠí‚Ìƒ[ƒh
+        // æ¤œå‡ºå™¨ã®ãƒ­ãƒ¼ãƒ‰
         CvHaarClassifierCascade* faceCascade = (CvHaarClassifierCascade*)::cvLoad( FACE_CASCADE_PATH, 0, 0, 0 );
         if( !faceCascade ) {
             throw std::runtime_error("error : cvLoad");
         }
 
-        // ŠçŒŸo—p‚ÌƒXƒgƒŒ[ƒW
+        // é¡”æ¤œå‡ºç”¨ã®ã‚¹ãƒˆãƒ¬ãƒ¼ã‚¸
         CvMemStorage* storage = ::cvCreateMemStorage();
         bool isDetected = true;
 
-        // ‘O‰ñ‚ÌŒŸoŠÔ
+        // å‰å›ã®æ¤œå‡ºæ™‚é–“
         DWORD prevTime = ::GetTickCount();
 
         while ( 1 ) {
-            // ƒf[ƒ^‚ÌXV‚ğ‘Ò‚Á‚ÄAŸ‚ÌƒtƒŒ[ƒ€‚ğæ“¾‚·‚é
+            // ãƒ‡ãƒ¼ã‚¿ã®æ›´æ–°ã‚’å¾…ã£ã¦ã€æ¬¡ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’å–å¾—ã™ã‚‹
             kinect.WaitAndUpdateAll();
             kinect::nui::VideoFrame videoMD( video );
 
-            // ƒf[ƒ^‚ÌƒRƒs[
+            // ãƒ‡ãƒ¼ã‚¿ã®ã‚³ãƒ”ãƒ¼
             memcpy( videoImg->imageData, (BYTE*)videoMD.Bits(), videoImg->widthStep * videoImg->height );
 
-            // Šç‚ÌŒŸo
+            // é¡”ã®æ¤œå‡º
             if (isDetected) {
-                // ƒ‚[ƒ^‚ğ‰ñ‚µ‚·‚¬‚é‚Æ‚¢‚©‚ñ‚Ì‚ÅA1•b‚Éˆê‰ñ
+                // ãƒ¢ãƒ¼ã‚¿ã‚’å›ã—ã™ãã‚‹ã¨ã„ã‹ã‚“ã®ã§ã€1ç§’ã«ä¸€å›
                 if ( (::GetTickCount() - prevTime) > 1000 ) {
                     prevTime = ::GetTickCount();
 
-                    // Šç‚ÌŒŸo
+                    // é¡”ã®æ¤œå‡º
                     cvClearMemStorage(storage);
                     CvSeq* faces = ::cvHaarDetectObjects( videoImg, faceCascade, storage );
                     for ( int i = 0; i < faces->total; ++i ) {
-                        // ŒŸo‚µ‚½À•W‚Ìæ“¾
+                        // æ¤œå‡ºã—ãŸåº§æ¨™ã®å–å¾—
                         CvRect rect = *(CvRect*)::cvGetSeqElem( faces, i );
 
-                        // ŒŸo‚µ‚½Šç‚É‰æ‘œ‚ğ“\‚è•t‚¯‚é
+                        // æ¤œå‡ºã—ãŸé¡”ã«ç”»åƒã‚’è²¼ã‚Šä»˜ã‘ã‚‹
                         ::cvSetImageROI( videoImg, rect );
                         cv::Ptr< IplImage >  resizeImg = ::cvCreateImage( cvSize( rect.width, rect.height), faceImg->depth, faceImg->nChannels );
                         ::cvResize( faceImg, resizeImg );
                         ::cvCopy( resizeImg, videoImg );
                         ::cvResetImageROI( videoImg );
 
-                        // ’†S“_‚ÆA•\¦—Ìˆæ‚ğO•ªŠ„‚µ‚½‚Æ‚«‚ÌÀ•W
+                        // ä¸­å¿ƒç‚¹ã¨ã€è¡¨ç¤ºé ˜åŸŸã‚’ä¸‰åˆ†å‰²ã—ãŸã¨ãã®åº§æ¨™
                         POINT c = { rect.x + (rect.width / 2), rect.y + (rect.height / 2) };
                         RECT place[] = {
                             { 0, 0, video.Width(), video.Height() / 3 },
@@ -80,8 +80,8 @@ void main()
                             { 0, video.Height() / 3 * 2, video.Width(), video.Height() },
                         };
 
-                        // Šç‚ÌˆÊ’u‚É‚æ‚Á‚ÄAKinect‚Ìñ‚ğ“®‚©‚·
-                        // ã1/3‚É‚¢‚ê‚ÎAã‚É“®‚©‚·
+                        // é¡”ã®ä½ç½®ã«ã‚ˆã£ã¦ã€Kinectã®é¦–ã‚’å‹•ã‹ã™
+                        // ä¸Š1/3ã«ã„ã‚Œã°ã€ä¸Šã«å‹•ã‹ã™
                         LONG angle = kinect.GetAngle();
                         if ( ::PtInRect( &place[0], c ) ) {
                             angle += 5;
@@ -89,10 +89,10 @@ void main()
                                 kinect.SetAngle( angle );
                             }
                         }
-                        // ’†1/3‚É‚¢‚ê‚ÎA‰½‚à‚µ‚È‚¢
+                        // ä¸­1/3ã«ã„ã‚Œã°ã€ä½•ã‚‚ã—ãªã„
                         else if ( ::PtInRect( &place[1], c ) ) {
                         }
-                        // ‰º1/3‚É‚¢‚ê‚ÎA‰º‚É“®‚©‚·
+                        // ä¸‹1/3ã«ã„ã‚Œã°ã€ä¸‹ã«å‹•ã‹ã™
                         else if ( ::PtInRect( &place[2], c ) ) {
                             angle -= 5;
                             if ( angle > kinect.CAMERA_ELEVATION_MINIMUM ) {
