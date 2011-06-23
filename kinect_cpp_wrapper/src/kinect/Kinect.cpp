@@ -105,14 +105,16 @@ namespace kinect {
 
 		void Kinect::SetAngle( LONG lAngleDegrees )
 		{
+            // あんまりがんばるとエラーになるので、コメントにしちゃった
 			HRESULT ret = instance_->NuiCameraElevationSetAngle( lAngleDegrees );
-			if ( ret != S_OK ) {
-				throw win32::Win32Exception( ret );
-			}
+			//if ( ret != S_OK ) {
+			//	throw win32::Win32Exception( ret );
+			//}
 		}
 
 		LONG Kinect::GetAngle() const
 		{
+            // あんまりがんばるとエラーになるので、コメントにしちゃった
 			LONG angle = 0;
 			HRESULT ret = instance_->NuiCameraElevationGetAngle( &angle );
 			//if ( ret != S_OK ) {
