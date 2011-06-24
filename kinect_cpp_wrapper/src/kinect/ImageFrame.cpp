@@ -1,4 +1,4 @@
-#include "kinect\nui\ImageFrame.h"
+﻿#include "kinect\nui\ImageFrame.h"
 #include "kinect\nui\ImageStream.h"
 
 #include "win32/Win32Exception.h"
@@ -60,7 +60,8 @@ namespace kinect {
         USHORT DepthFrame::operator () ( UINT x, UINT y )
         {
             USHORT* depth = (USHORT*)lockedRect_.pBits;
-            return depth[(Width() * y) + x];
+            UCHAR* d = (UCHAR*)&depth[(Width() * y) + x];
+            return  (USHORT)(d[0] | d[1] << 8 );
         }
     }
 }

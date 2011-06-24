@@ -1,4 +1,4 @@
-#include "kinect\nui\ImageStream.h"
+﻿#include "kinect\nui\ImageStream.h"
 
 #include "win32/Win32Exception.h"
 

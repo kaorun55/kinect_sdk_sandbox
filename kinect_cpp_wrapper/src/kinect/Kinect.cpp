@@ -1,4 +1,4 @@
-#include <vector>
+ï»¿#include <vector>
 
 #include "kinect/nui/Kinect.h"
 
@@ -7,9 +7,9 @@
 namespace kinect {
 	namespace nui {
 		/**
-		 * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		 * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		 *
-		 * @param	index	¶¬‚·‚éKinectƒCƒ“ƒXƒ^ƒ“ƒX‚ÌƒCƒ“ƒfƒbƒNƒX
+		 * @param	index	ç”Ÿæˆã™ã‚‹Kinectã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 		 */
 		Kinect::Kinect( int index /*= 0*/ )
             : instance_( Create( index ) )
@@ -21,7 +21,7 @@ namespace kinect {
 		}
 
 		/**
-		 * ƒfƒXƒgƒ‰ƒNƒ^
+		 * ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		 */
 		Kinect::~Kinect()
 		{
@@ -29,9 +29,9 @@ namespace kinect {
 		}
 
 		/**
-		 * ƒCƒ“ƒXƒ^ƒ“ƒX‚ð¶¬‚·‚é
+		 * ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆã™ã‚‹
 		 *
-		 * @param	index	¶¬‚·‚éKinectƒCƒ“ƒXƒ^ƒ“ƒX‚ÌƒCƒ“ƒfƒbƒNƒX
+		 * @param	index	ç”Ÿæˆã™ã‚‹Kinectã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 		 */
         Kinect::NuiInstance Kinect::Create( int index )
         {
@@ -45,9 +45,9 @@ namespace kinect {
         }
 
 		/**
-		 * ƒAƒNƒeƒBƒu‚ÈKinect‚Ì”‚ðŽæ“¾‚·‚é
+		 * ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªKinectã®æ•°ã‚’å–å¾—ã™ã‚‹
 		 *
-		 * @return	ƒAƒNƒeƒBƒu‚ÈKinect‚Ì”
+		 * @return	ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªKinectã®æ•°
 		 */
 		/*static*/ int Kinect::GetActiveCount()
 		{
@@ -61,13 +61,13 @@ namespace kinect {
 		}
 
 		/**
-		 * Kinect‚Ì‰Šú‰»
+		 * Kinectã®åˆæœŸåŒ–
 		 *
-		 * @param	dwFlags	‰Šú‰»ƒtƒ‰ƒO
-		 *	@arg	NUI_INITIALIZE_FLAG_USES_DEPTH_AND_PLAYER_INDEX	‹——£‚Æƒ†[ƒU[‚ðŽæ“¾‚·‚é
-		 *	@arg	NUI_INITIALIZE_FLAG_USES_DEPTH_AND_PLAYER_INDEX	‹——£‚Æƒ†[ƒU[‚ðŽæ“¾‚·‚é
-		 *	@arg	NUI_INITIALIZE_FLAG_USES_DEPTH_AND_PLAYER_INDEX	‹——£‚Æƒ†[ƒU[‚ðŽæ“¾‚·‚é
-		 *	@arg	NUI_INITIALIZE_FLAG_USES_DEPTH_AND_PLAYER_INDEX	‹——£‚Æƒ†[ƒU[‚ðŽæ“¾‚·‚é
+		 * @param	dwFlags	åˆæœŸåŒ–ãƒ•ãƒ©ã‚°
+		 *	@arg	NUI_INITIALIZE_FLAG_USES_DEPTH_AND_PLAYER_INDEX	è·é›¢ã¨ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚’å–å¾—ã™ã‚‹
+		 *	@arg	NUI_INITIALIZE_FLAG_USES_DEPTH_AND_PLAYER_INDEX	è·é›¢ã¨ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚’å–å¾—ã™ã‚‹
+		 *	@arg	NUI_INITIALIZE_FLAG_USES_DEPTH_AND_PLAYER_INDEX	è·é›¢ã¨ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚’å–å¾—ã™ã‚‹
+		 *	@arg	NUI_INITIALIZE_FLAG_USES_DEPTH_AND_PLAYER_INDEX	è·é›¢ã¨ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚’å–å¾—ã™ã‚‹
 		 */
 		void Kinect::Initialize( DWORD dwFlags )
 		{
@@ -105,7 +105,7 @@ namespace kinect {
 
 		void Kinect::SetAngle( LONG lAngleDegrees )
 		{
-            // ‚ ‚ñ‚Ü‚è‚ª‚ñ‚Î‚é‚ÆƒGƒ‰[‚É‚È‚é‚Ì‚ÅAƒRƒƒ“ƒg‚É‚µ‚¿‚á‚Á‚½
+            // ã‚ã‚“ã¾ã‚ŠãŒã‚“ã°ã‚‹ã¨ã‚¨ãƒ©ãƒ¼ã«ãªã‚‹ã®ã§ã€ã‚³ãƒ¡ãƒ³ãƒˆã«ã—ã¡ã‚ƒã£ãŸ
 			HRESULT ret = instance_->NuiCameraElevationSetAngle( lAngleDegrees );
 			//if ( ret != S_OK ) {
 			//	throw win32::Win32Exception( ret );
@@ -114,7 +114,7 @@ namespace kinect {
 
 		LONG Kinect::GetAngle() const
 		{
-            // ‚ ‚ñ‚Ü‚è‚ª‚ñ‚Î‚é‚ÆƒGƒ‰[‚É‚È‚é‚Ì‚ÅAƒRƒƒ“ƒg‚É‚µ‚¿‚á‚Á‚½
+            // ã‚ã‚“ã¾ã‚ŠãŒã‚“ã°ã‚‹ã¨ã‚¨ãƒ©ãƒ¼ã«ãªã‚‹ã®ã§ã€ã‚³ãƒ¡ãƒ³ãƒˆã«ã—ã¡ã‚ƒã£ãŸ
 			LONG angle = 0;
 			HRESULT ret = instance_->NuiCameraElevationGetAngle( &angle );
 			//if ( ret != S_OK ) {

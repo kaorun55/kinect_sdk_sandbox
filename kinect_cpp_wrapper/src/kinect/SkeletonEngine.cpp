@@ -1,4 +1,4 @@
-#include "kinect\nui\SkeletonEngine.h"
+﻿#include "kinect\nui\SkeletonEngine.h"
 
 #include "win32/Win32Exception.h"
 

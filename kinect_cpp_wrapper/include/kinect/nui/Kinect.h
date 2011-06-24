@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <memory>
 
@@ -8,21 +8,21 @@
 #include "kinect\nui\ImageStream.h"
 #include "kinect\nui\SkeletonEngine.h"
 
-/// tr1‚ğstd‚É‚·‚é
+/// tr1ã‚’stdã«ã™ã‚‹
 namespace std {
 	using namespace std::tr1;
 }
 
-/// MSŒö®SDK‚Ì–¼‘O‹óŠÔ
+/// MSå…¬å¼SDKã®åå‰ç©ºé–“
 namespace kinect {
-	/// NUI(ƒJƒƒ‰A‰æ‘œA‹——£)‚Ì–¼‘O‹óŠÔ
+	/// NUI(ã‚«ãƒ¡ãƒ©ã€ç”»åƒã€è·é›¢)ã®åå‰ç©ºé–“
 	namespace nui {
-		/// Kinect‚Ì‘S‘Ì“I‚È“®ì
+		/// Kinectã®å…¨ä½“çš„ãªå‹•ä½œ
 		class Kinect
 		{
 		public:
 
-			/// ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìƒ|ƒCƒ“ƒ^
+			/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
             typedef std::shared_ptr< INuiInstance > NuiInstance;
 
 			Kinect( int index = 0 );
@@ -31,13 +31,13 @@ namespace kinect {
 			static int GetActiveCount();
 
 			/**
-			 * Kinect‚Ì‰Šú‰»
+			 * Kinectã®åˆæœŸåŒ–
 			 *
-			 * @param	dwFlags	‰Šú‰»ƒtƒ‰ƒO
-			 *	@arg	NUI_INITIALIZE_FLAG_USES_DEPTH_AND_PLAYER_INDEX	‹——£ƒf[ƒ^‚Æƒ†[ƒU[‚ğæ“¾‚·‚é
-			 *	@arg	NUI_INITIALIZE_FLAG_USES_COLOR					ƒJƒƒ‰‰æ‘œ‚ğæ“¾‚·‚é
-			 *	@arg	NUI_INITIALIZE_FLAG_USES_SKELETON				œŠi’ÇÕ‚ğs‚¤
-			 *	@arg	NUI_INITIALIZE_FLAG_USES_DEPTH					‹——£ƒf[ƒ^‚ğæ“¾‚·‚é
+			 * @param	dwFlags	åˆæœŸåŒ–ãƒ•ãƒ©ã‚°
+			 *	@arg	NUI_INITIALIZE_FLAG_USES_DEPTH_AND_PLAYER_INDEX	è·é›¢ãƒ‡ãƒ¼ã‚¿ã¨ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚’å–å¾—ã™ã‚‹
+			 *	@arg	NUI_INITIALIZE_FLAG_USES_COLOR					ã‚«ãƒ¡ãƒ©ç”»åƒã‚’å–å¾—ã™ã‚‹
+			 *	@arg	NUI_INITIALIZE_FLAG_USES_SKELETON				éª¨æ ¼è¿½è·¡ã‚’è¡Œã†
+			 *	@arg	NUI_INITIALIZE_FLAG_USES_DEPTH					è·é›¢ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 			 */
 			void Initialize( DWORD dwFlags );
 			void Shutdown();
@@ -48,35 +48,35 @@ namespace kinect {
 			LONG GetAngle() const;
 
 			/**
-			 * ‚±‚ÌKinect‚ÌƒCƒ“ƒXƒ^ƒ“ƒXƒCƒ“ƒfƒbƒNƒX‚ğæ“¾‚·‚é
+			 * ã“ã®Kinectã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—ã™ã‚‹
 			 * 
-			 * @return 0‚©‚çn‚Ü‚éƒCƒ“ƒXƒ^ƒ“ƒX‚ÌƒCƒ“ƒfƒbƒNƒX
+			 * @return 0ã‹ã‚‰å§‹ã¾ã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 			 */
             int GetInstanceIndex() const { return index_; }
 
 			/**
-			 * ‚±‚ÌKinect‚ÌƒJƒƒ‰ƒCƒ[ƒW‚ğæ“¾‚·‚é
+			 * ã“ã®Kinectã®ã‚«ãƒ¡ãƒ©ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’å–å¾—ã™ã‚‹
 			 * 
-			 * @return ImageStream‚ÌQÆ
+			 * @return ImageStreamã®å‚ç…§
 			 */
             ImageStream& VideoStream() { return video_; }
 
 			/**
-			 * ‚±‚ÌKinect‚Ì‹——£ƒCƒ[ƒW‚ğæ“¾‚·‚é
+			 * ã“ã®Kinectã®è·é›¢ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’å–å¾—ã™ã‚‹
 			 * 
-			 * @return ImageStream‚ÌQÆ
+			 * @return ImageStreamã®å‚ç…§
 			 */
 			ImageStream& DepthStream() { return depth_; }
 
 			/**
-			 * ‚±‚ÌKinect‚ÌƒXƒPƒ‹ƒgƒ“ƒGƒ“ƒWƒ“‚ğæ“¾‚·‚é
+			 * ã“ã®Kinectã®ã‚¹ã‚±ãƒ«ãƒˆãƒ³ã‚¨ãƒ³ã‚¸ãƒ³ã‚’å–å¾—ã™ã‚‹
 			 * 
-			 * @return SkeletonEngine‚ÌQÆ
+			 * @return SkeletonEngineã®å‚ç…§
 			 */
 			SkeletonEngine& Skeleton() { return skeleton_; }
 
-            static const LONG CAMERA_ELEVATION_MAXIMUM = NUI_CAMERA_ELEVATION_MAXIMUM;	///< ƒJƒƒ‰‚Ìñ‚Ó‚èÅ‘å’l
-            static const LONG CAMERA_ELEVATION_MINIMUM = NUI_CAMERA_ELEVATION_MINIMUM;	///< ƒJƒƒ‰‚Ìñ‚Ó‚èÅ¬’l
+            static const LONG CAMERA_ELEVATION_MAXIMUM = NUI_CAMERA_ELEVATION_MAXIMUM;	///< ã‚«ãƒ¡ãƒ©ã®é¦–ãµã‚Šæœ€å¤§å€¤
+            static const LONG CAMERA_ELEVATION_MINIMUM = NUI_CAMERA_ELEVATION_MINIMUM;	///< ã‚«ãƒ¡ãƒ©ã®é¦–ãµã‚Šæœ€å°å€¤
 
         private:
 
@@ -84,13 +84,13 @@ namespace kinect {
 
 		private:
 
-			NuiInstance instance_;			///< ƒCƒ“ƒXƒ^ƒ“ƒX
+			NuiInstance instance_;			///< ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 
-            ImageStream video_;				///< ƒJƒƒ‰ƒCƒ[ƒW
-            ImageStream depth_;				///< ‹——£ƒCƒ[ƒW
-            SkeletonEngine  skeleton_;		///< œŠiƒgƒ‰ƒbƒLƒ“ƒO
+            ImageStream video_;				///< ã‚«ãƒ¡ãƒ©ã‚¤ãƒ¡ãƒ¼ã‚¸
+            ImageStream depth_;				///< è·é›¢ã‚¤ãƒ¡ãƒ¼ã‚¸
+            SkeletonEngine  skeleton_;		///< éª¨æ ¼ãƒˆãƒ©ãƒƒã‚­ãƒ³ã‚°
 
-            int index_;						///< ‚±‚ÌKinect‚ÌƒCƒ“ƒfƒbƒNƒX
+            int index_;						///< ã“ã®Kinectã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 		};
 	}
 }
