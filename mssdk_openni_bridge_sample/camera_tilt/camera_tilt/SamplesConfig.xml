@@ -1,0 +1,31 @@
+<OpenNI>
+    <Licenses>
+        <License vendor="PrimeSense" key="0KOIk2JeIBYClPWVnMoRKn5cdY4=" />
+    </Licenses>
+    <Log writeToConsole="false" writeToFile="false">
+        <!-- 0 - Verbose, 1 - Info, 2 - Warning, 3 - Error (default) -->
+        <LogLevel value="1"/>
+        <Masks>
+            <Mask name="ALL" on="false"/>
+        </Masks>
+        <Dumps>
+        </Dumps>
+    </Log>
+    <ProductionNodes>
+        <Node type="Image" name="Image1">
+            <Configuration>
+                <MapOutputMode xRes="640" yRes="480" FPS="30"/>
+            </Configuration>
+        </Node>
+        <Node type="Depth" name="Depth1">
+            <Configuration>
+                <MapOutputMode xRes="640" yRes="480" FPS="30"/>
+            </Configuration>
+        </Node>
+        <Node type="User" name="User1">
+            <Query>
+                <Name>MSRKinectUserSkeletonGenerator</Name>
+            </Query>
+        </Node>
+    </ProductionNodes>
+</OpenNI>
