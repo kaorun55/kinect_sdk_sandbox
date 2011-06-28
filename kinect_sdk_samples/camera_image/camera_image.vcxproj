@@ -56,7 +56,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft Research KinectSDK\lib;C:\OpenCV2.2\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>MSRKinectNUI.lib;opencv_core220d.lib;opencv_highgui220d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>;opencv_core220d.lib;opencv_highgui220d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

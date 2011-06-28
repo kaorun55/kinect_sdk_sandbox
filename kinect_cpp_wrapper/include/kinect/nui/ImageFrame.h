@@ -37,7 +37,7 @@ namespace kinect {
             ImageStream& imageStream_;
 
             const NUI_IMAGE_FRAME *imageFrame_;	///< フレームデータ
-            KINECT_LOCKED_RECT lockedRect_;		///< 矩形データ
+            KINECT_LOCKED_RECT lockedRect_;	    ///< 矩形データ
         };
 
         /// カメラ画像の1フレームデータ

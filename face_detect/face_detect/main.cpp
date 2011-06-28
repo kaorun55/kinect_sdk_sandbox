@@ -9,6 +9,36 @@
 
 const char* FACE_CASCADE_PATH = "C:/OpenCV2.2/data/haarcascades/haarcascade_frontalface_alt.xml";
 
+void moveTilt( kinect::nui::Kinect& kinect, const POINT& pt )
+{
+    kinect::nui::ImageStream& video = kinect.VideoStream();
+    const RECT place[] = {
+        { 0, 0, video.Width(), video.Height() / 3 },
+        { 0, video.Height() / 3, video.Width(), video.Height() / 3 * 2 },
+        { 0, video.Height() / 3 * 2, video.Width(), video.Height() },
+    };
+
+    // 顔の位置によって、Kinectの首を動かす
+    // 上1/3にいれば、上に動かす
+    LONG angle = kinect.GetAngle();
+    if ( ::PtInRect( &place[0], pt ) ) {
+        angle += 5;
+        if ( angle < kinect.CAMERA_ELEVATION_MAXIMUM ) {
+            kinect.SetAngle( angle );
+        }
+    }
+    // 中1/3にいれば、何もしない
+    else if ( ::PtInRect( &place[1], pt ) ) {
+    }
+    // 下1/3にいれば、下に動かす
+    else if ( ::PtInRect( &place[2], pt ) ) {
+        angle -= 5;
+        if ( angle > kinect.CAMERA_ELEVATION_MINIMUM ) {
+            kinect.SetAngle( angle );
+        }
+    }
+}
+
 void main()
 {
     try {
@@ -20,6 +50,9 @@ void main()
 
         kinect::nui::ImageStream& depth = kinect.DepthStream();
         depth.Open( NUI_IMAGE_TYPE_DEPTH_AND_PLAYER_INDEX, NUI_IMAGE_RESOLUTION_320x240 );
+
+        kinect::nui::SkeletonEngine& skeleton = kinect.Skeleton();
+        skeleton.Enable();
 
         // OpenCVの初期設定
         char* windowName = "camera_elevation";
@@ -39,7 +72,8 @@ void main()
 
         // 顔検出用のストレージ
         CvMemStorage* storage = ::cvCreateMemStorage();
-        bool isDetected = true;
+        bool isDetected =  false;
+        bool isSkelton = true;
 
         // 前回の検出時間
         DWORD prevTime = ::GetTickCount();
@@ -72,32 +106,31 @@ void main()
                         ::cvCopy( resizeImg, videoImg );
                         ::cvResetImageROI( videoImg );
 
-                        // 中心点と、表示領域を三分割したときの座標
+                        // 顔の中心点を基準にKinectの首を振る
                         POINT c = { rect.x + (rect.width / 2), rect.y + (rect.height / 2) };
-                        RECT place[] = {
-                            { 0, 0, video.Width(), video.Height() / 3 },
-                            { 0, video.Height() / 3, video.Width(), video.Height() / 3 * 2 },
-                            { 0, video.Height() / 3 * 2, video.Width(), video.Height() },
-                        };
+                        moveTilt( kinect, c );
+                    }
+                }
+            }
+            // 骨格検出
+            else if ( isSkelton ) {
+                // 骨格情報を取得する
+                kinect::nui::SkeletonFrame skeletonMD = skeleton.GetNextFrame();
 
-                        // 顔の位置によって、Kinectの首を動かす
-                        // 上1/3にいれば、上に動かす
-                        LONG angle = kinect.GetAngle();
-                        if ( ::PtInRect( &place[0], c ) ) {
-                            angle += 5;
-                            if ( angle < kinect.CAMERA_ELEVATION_MAXIMUM ) {
-                                kinect.SetAngle( angle );
-                            }
-                        }
-                        // 中1/3にいれば、何もしない
-                        else if ( ::PtInRect( &place[1], c ) ) {
-                        }
-                        // 下1/3にいれば、下に動かす
-                        else if ( ::PtInRect( &place[2], c ) ) {
-                            angle -= 5;
-                            if ( angle > kinect.CAMERA_ELEVATION_MINIMUM ) {
-                                kinect.SetAngle( angle );
-                            }
+                // 骨格を見つけた
+                if ( skeletonMD.IsFoundSkeleton() ) {
+                    skeletonMD.TransformSmooth();
+
+                    for ( int i = 0; i < kinect::nui::SkeletonFrame::SKELETON_COUNT; ++i ) {
+                        // 骨格追跡している場合、右手を基準にKinectの首を振る
+                        if ( skeletonMD[i].TrackingState() == NUI_SKELETON_TRACKED ) {
+                            int trac = NUI_SKELETON_POSITION_HAND_RIGHT;
+                            kinect::nui::SkeletonData::Point p = skeletonMD[i].TransformSkeletonToDepthImage( trac );
+                            CvPoint pt = cvPoint( (p.x * video.Width()) + 0.5f, (p.y * video.Height()) + 0.5f );
+                            cvCircle( videoImg, pt, 5,  cvScalar( 255, 0, 0 ), -1 );
+
+                            POINT c = { pt.x, pt.y };
+                            moveTilt( kinect, c );
                         }
                     }
                 }
@@ -109,8 +142,11 @@ void main()
             if ( key == 'q' ) {
                 break;
             }
-            else if (key == 'd') {
+            else if ( key == 'd' ) {
                 isDetected = !isDetected;
+            }
+            else if ( key == 's' ) {
+                isSkelton = !isSkelton;
             }
         }
 
