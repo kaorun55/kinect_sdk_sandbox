@@ -97,6 +97,10 @@ namespace kinect {
                 handle.push_back( Skeleton().event_.get() );
             }
 
+            if ( handle.size() == 0 ) {
+                return;
+            }
+
             DWORD ret = ::WaitForMultipleObjects( handle.size(), &handle[0], TRUE, INFINITE );
             if ( ret == WAIT_FAILED ) {
                 throw win32::Win32Exception( ::GetLastError() );

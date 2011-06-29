@@ -5,8 +5,9 @@
 #include <Windows.h>
 #include <MSR_NuiApi.h>
 
-#include "kinect\nui\ImageStream.h"
-#include "kinect\nui\SkeletonEngine.h"
+#include "ImageStream.h"
+#include "SkeletonEngine.h"
+#include "ImageFrame.h"
 
 /// tr1をstdにする
 namespace std {
