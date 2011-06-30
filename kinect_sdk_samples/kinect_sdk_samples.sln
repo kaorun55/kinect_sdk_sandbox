@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "camera_image", "camera_imag
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multi_kinect", "multi_kinect\multi_kinect.vcxproj", "{A226C3A6-DDDC-45C3-9BF4-F9E964518930}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_device_info", "audio_device_info\audio_device_info.vcxproj", "{6657ECF7-A01F-4667-AAB8-85FA01898906}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +21,10 @@ Global
 		{A226C3A6-DDDC-45C3-9BF4-F9E964518930}.Debug|Win32.Build.0 = Debug|Win32
 		{A226C3A6-DDDC-45C3-9BF4-F9E964518930}.Release|Win32.ActiveCfg = Release|Win32
 		{A226C3A6-DDDC-45C3-9BF4-F9E964518930}.Release|Win32.Build.0 = Release|Win32
+		{6657ECF7-A01F-4667-AAB8-85FA01898906}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6657ECF7-A01F-4667-AAB8-85FA01898906}.Debug|Win32.Build.0 = Debug|Win32
+		{6657ECF7-A01F-4667-AAB8-85FA01898906}.Release|Win32.ActiveCfg = Release|Win32
+		{6657ECF7-A01F-4667-AAB8-85FA01898906}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
