@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// AudioDeviceInfoのサンプル
+using System;
 using Microsoft.Research.Kinect.Audio;
 
 namespace audio_device_info
@@ -10,8 +8,8 @@ namespace audio_device_info
     {
         static void Main( string[] args )
         {
-            KinectAudioSource kas = new KinectAudioSource();
-            foreach ( AudioDeviceInfo device in kas.FindCaptureDevices() ) {
+            KinectAudioSource kinectAudio = new KinectAudioSource();
+            foreach ( AudioDeviceInfo device in kinectAudio.FindCaptureDevices() ) {
                 Console.WriteLine( "DeviceIndex:" + device.DeviceIndex + " " +
                                    "DeviceName :" + device.DeviceName + " " +
                                    "DeviceID   :" + device.DeviceID );
