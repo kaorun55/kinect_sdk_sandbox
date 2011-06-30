@@ -1,7 +1,7 @@
-// ƒJƒƒ‰‰æ‘œ‚ğ•\¦‚·‚éƒTƒ“ƒvƒ‹
+ï»¿// ã‚«ãƒ¡ãƒ©ç”»åƒã‚’è¡¨ç¤ºã™ã‚‹ã‚µãƒ³ãƒ—ãƒ«
 #include <iostream>
 
-// MSR_NuiApi.h‚Ì‘O‚ÉWindows.h‚ğƒCƒ“ƒNƒ‹[ƒh‚·‚é
+// MSR_NuiApi.hã®å‰ã«Windows.hã‚’ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã™ã‚‹
 #include <Windows.h>
 #include <MSR_NuiApi.h>
 #include <MSRKinectAudio.h>
@@ -18,7 +18,7 @@ void main()
             throw win32::Win32Exception( hr );
         }
 
-        // ƒCƒ“ƒ|[ƒgƒ‰ƒCƒuƒ‰ƒŠ‚ª‚È‚¢‚Ì‚ÅADLL‚©‚ç’¼‚Éƒ[ƒh‚·‚é
+        // ã‚¤ãƒ³ãƒãƒ¼ãƒˆãƒ©ã‚¤ãƒ–ãƒ©ãƒªãŒãªã„ã®ã§ã€DLLã‹ã‚‰ç›´ã«ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
         win32::DllLoader dll( "MSRKinectAudio.dll" );
         GETKINECTDEVICEINFO GetKinectDeviceInfo = dll.GetProcAddress<GETKINECTDEVICEINFO>( "GetKinectDeviceInfo" );
 
