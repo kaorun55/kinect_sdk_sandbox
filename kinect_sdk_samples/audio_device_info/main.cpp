@@ -1,9 +1,8 @@
-﻿// カメラ画像を表示するサンプル
+﻿// GetKinectDeviceInfoのサンプル
 #include <iostream>
 
-// MSR_NuiApi.hの前にWindows.hをインクルードする
+// MSRKinectAudio.hの前にWindows.hをインクルードする
 #include <Windows.h>
-#include <MSR_NuiApi.h>
 #include <MSRKinectAudio.h>
 
 #include "win32\DllLoader.h"
