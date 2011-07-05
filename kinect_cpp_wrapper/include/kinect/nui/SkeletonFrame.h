@@ -22,6 +22,7 @@ namespace kinect {
             struct Point {
                 float   x;
                 float   y;
+                USHORT  depth;
 
                 Point() : x( 0 ), y( 0 ) {}
             };
@@ -31,7 +32,7 @@ namespace kinect {
             Point TransformSkeletonToDepthImage( int index )
             {
                 Point p;
-                NuiTransformSkeletonToDepthImageF( skeletonData_.SkeletonPositions[index], &p.x, &p.y );
+                NuiTransformSkeletonToDepthImageF( skeletonData_.SkeletonPositions[index], &p.x, &p.y, &p.depth );
                 return p;
             }
 

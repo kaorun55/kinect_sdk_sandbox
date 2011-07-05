@@ -137,7 +137,11 @@ void main()
                         int depth = depthMD( p.x / 2, p.y / 2 ) >> 3;
 
                         cvCircle(playerImg, cvPoint( p.x, p.y ) , 5,  cvScalar( 0, 255, 0 ), -1 );
-                        Vector4 v = NuiTransformDepthImageToSkeletonF( p.x, p.y, depth );
+
+
+                        p.x = (p.x - 0.5f) / videoMD.Width();
+                        p.y = (p.y - 0.5f) / videoMD.Height();
+                        Vector4 v = NuiTransformDepthImageToSkeletonF( p.x, p.y, p.depth );
 
                         float head = v.y * 100;
                         float foot = skeleton[NUI_SKELETON_POSITION_FOOT_LEFT].y * 100;
