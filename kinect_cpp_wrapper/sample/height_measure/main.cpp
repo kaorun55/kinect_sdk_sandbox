@@ -68,10 +68,6 @@ void DrawSkeleton( IplImage* Skeleton, kinect::nui::SkeletonData& skeleton )
     for ( int i = 0; i < kinect::nui::SkeletonData::POSITION_COUNT; ++i ) {
         cvCircle(Skeleton, points[i], 5,  cvScalar( 255, 0, 0 ), -1 );
     }
-
-    float head = skeleton[NUI_SKELETON_POSITION_HEAD].y;
-    float foot = skeleton[NUI_SKELETON_POSITION_FOOT_LEFT].y;
-    std::cout << "head : " << head << " foot : " << foot << " height : " << foot - head << std::endl;
 }
 
 void main()
@@ -128,6 +124,24 @@ void main()
                 for ( int i = 0; i < kinect::nui::SkeletonFrame::SKELETON_COUNT; ++i ) {
                     if ( skeletonMD[i].TrackingState() == NUI_SKELETON_TRACKED ) {
                         DrawSkeleton( playerImg, skeletonMD[i] );
+
+                        kinect::nui::SkeletonData& skeleton = skeletonMD[i];
+
+                        // HEADは顔の中心なので、NuiTransformSkeletonToDepthImageFしたY座標を上に上がって、ユーザーを識別してる一番上まで行く
+                        // その座標をNuiTransformDepthImageToSkeletonFしたのが、頭のてっぺんの実座標
+                        kinect::nui::SkeletonData::Point p = skeleton.TransformSkeletonToDepthImage( NUI_SKELETON_POSITION_HEAD );
+                        p.x = p.x * videoMD.Width() + 0.5f;
+                        p.y = p.y * videoMD.Height() + 0.5f;
+
+                        int player = depthMD( p.x / 2, p.y / 2 ) & 0x7;
+                        int depth = depthMD( p.x / 2, p.y / 2 ) >> 3;
+
+                        cvCircle(playerImg, cvPoint( p.x, p.y ) , 5,  cvScalar( 0, 255, 0 ), -1 );
+                        Vector4 v = NuiTransformDepthImageToSkeletonF( p.x, p.y, depth );
+
+                        float head = v.y * 100;
+                        float foot = skeleton[NUI_SKELETON_POSITION_FOOT_LEFT].y * 100;
+                        std::cout << "head : " << head << " foot : " << foot << " height : " << abs(foot) + abs(head) << std::endl;
                     }
                 }
             }
