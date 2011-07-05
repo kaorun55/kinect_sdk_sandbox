@@ -35,6 +35,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multi_kinect", "multi_kinec
 		{16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A} = {16C8F9E4-5EAB-4549-9832-BB2D9B6E5D6A}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "height_measure", "height_measure\height_measure.vcxproj", "{526C5F1D-1D9A-4527-9395-88F34E9DFBCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -73,6 +75,10 @@ Global
 		{1288081D-FF7C-423B-8BC6-26922AB380D6}.Debug|Win32.Build.0 = Debug|Win32
 		{1288081D-FF7C-423B-8BC6-26922AB380D6}.Release|Win32.ActiveCfg = Release|Win32
 		{1288081D-FF7C-423B-8BC6-26922AB380D6}.Release|Win32.Build.0 = Release|Win32
+		{526C5F1D-1D9A-4527-9395-88F34E9DFBCD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{526C5F1D-1D9A-4527-9395-88F34E9DFBCD}.Debug|Win32.Build.0 = Debug|Win32
+		{526C5F1D-1D9A-4527-9395-88F34E9DFBCD}.Release|Win32.ActiveCfg = Release|Win32
+		{526C5F1D-1D9A-4527-9395-88F34E9DFBCD}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -38,6 +38,11 @@ namespace kinect {
 
             NUI_SKELETON_TRACKING_STATE TrackingState() const { return skeletonData_.eTrackingState; }
 
+			Vector4 operator [] ( int index )
+			{
+				return skeletonData_.SkeletonPositions[index];
+			}
+
         private:
 
             SkeletonData( NUI_SKELETON_DATA& skeletonData )
