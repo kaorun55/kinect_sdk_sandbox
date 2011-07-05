@@ -18,10 +18,10 @@
 
 
 Ctilt_controlDlg::Ctilt_controlDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(Ctilt_controlDlg::IDD, pParent)
+    : CDialogEx(Ctilt_controlDlg::IDD, pParent)
     , m_angle(0)
 {
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+    m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
 void Ctilt_controlDlg::DoDataExchange(CDataExchange* pDX)
@@ -32,8 +32,8 @@ void Ctilt_controlDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(Ctilt_controlDlg, CDialogEx)
-	ON_WM_PAINT()
-	ON_WM_QUERYDRAGICON()
+    ON_WM_PAINT()
+    ON_WM_QUERYDRAGICON()
     ON_WM_TIMER()
     ON_BN_CLICKED(IDOK, &Ctilt_controlDlg::OnBnClickedOk)
     ON_BN_CLICKED(IDCANCEL, &Ctilt_controlDlg::OnBnClickedCancel)
@@ -44,34 +44,34 @@ END_MESSAGE_MAP()
 
 BOOL Ctilt_controlDlg::OnInitDialog()
 {
-	CDialogEx::OnInitDialog();
+    CDialogEx::OnInitDialog();
 
-	// このダイアログのアイコンを設定します。アプリケーションのメイン ウィンドウがダイアログでない場合、
-	//  Framework は、この設定を自動的に行います。
-	SetIcon(m_hIcon, TRUE);			// 大きいアイコンの設定
-	SetIcon(m_hIcon, FALSE);		// 小さいアイコンの設定
+    // このダイアログのアイコンを設定します。アプリケーションのメイン ウィンドウがダイアログでない場合、
+    //  Framework は、この設定を自動的に行います。
+    SetIcon(m_hIcon, TRUE);			// 大きいアイコンの設定
+    SetIcon(m_hIcon, FALSE);		// 小さいアイコンの設定
 
-	ShowWindow(SW_MINIMIZE);
+    ShowWindow(SW_MINIMIZE);
 
-	// TODO: 初期化をここに追加します。
-	try {
-		kinect_.Initialize( NUI_INITIALIZE_FLAG_USES_COLOR );
-		kinect_.VideoStream().Open( NUI_IMAGE_TYPE::NUI_IMAGE_TYPE_COLOR, NUI_IMAGE_RESOLUTION::NUI_IMAGE_RESOLUTION_640x480 );
+    // TODO: 初期化をここに追加します。
+    try {
+        kinect_.Initialize( NUI_INITIALIZE_FLAG_USES_COLOR );
+        kinect_.VideoStream().Open( NUI_IMAGE_TYPE::NUI_IMAGE_TYPE_COLOR, NUI_IMAGE_RESOLUTION::NUI_IMAGE_RESOLUTION_640x480 );
 
-		m_sliderTilt.SetRange( kinect_.CAMERA_ELEVATION_MINIMUM, kinect_.CAMERA_ELEVATION_MAXIMUM );
-		m_angle = kinect_.GetAngle();
+        m_sliderTilt.SetRange( kinect_.CAMERA_ELEVATION_MINIMUM, kinect_.CAMERA_ELEVATION_MAXIMUM );
+        m_angle = kinect_.GetAngle();
 
-		SetTimer( TIMER_ANGLE, 1000, 0 );
-		SetTimer( TIMER_UPDATE, 100, 0 );
+        SetTimer( TIMER_ANGLE, 1000, 0 );
+        SetTimer( TIMER_UPDATE, 100, 0 );
 
-		UpdateData( FALSE );
-	}
-	catch ( std::exception& ex ) {
-		MessageBox( ex.what() );
-		OnCancel();
-	}
+        UpdateData( FALSE );
+    }
+    catch ( std::exception& ex ) {
+        MessageBox( ex.what() );
+        OnCancel();
+    }
 
-	return TRUE;  // フォーカスをコントロールに設定した場合を除き、TRUE を返します。
+    return TRUE;  // フォーカスをコントロールに設定した場合を除き、TRUE を返します。
 }
 
 // ダイアログに最小化ボタンを追加する場合、アイコンを描画するための
@@ -80,34 +80,34 @@ BOOL Ctilt_controlDlg::OnInitDialog()
 
 void Ctilt_controlDlg::OnPaint()
 {
-	if (IsIconic())
-	{
-		CPaintDC dc(this); // 描画のデバイス コンテキスト
+    if (IsIconic())
+    {
+        CPaintDC dc(this); // 描画のデバイス コンテキスト
 
-		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
+        SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
-		// クライアントの四角形領域内の中央
-		int cxIcon = GetSystemMetrics(SM_CXICON);
-		int cyIcon = GetSystemMetrics(SM_CYICON);
-		CRect rect;
-		GetClientRect(&rect);
-		int x = (rect.Width() - cxIcon + 1) / 2;
-		int y = (rect.Height() - cyIcon + 1) / 2;
+        // クライアントの四角形領域内の中央
+        int cxIcon = GetSystemMetrics(SM_CXICON);
+        int cyIcon = GetSystemMetrics(SM_CYICON);
+        CRect rect;
+        GetClientRect(&rect);
+        int x = (rect.Width() - cxIcon + 1) / 2;
+        int y = (rect.Height() - cyIcon + 1) / 2;
 
-		// アイコンの描画
-		dc.DrawIcon(x, y, m_hIcon);
-	}
-	else
-	{
+        // アイコンの描画
+        dc.DrawIcon(x, y, m_hIcon);
+    }
+    else
+    {
         CDialogEx::OnPaint();
-	}
+    }
 }
 
 // ユーザーが最小化したウィンドウをドラッグしているときに表示するカーソルを取得するために、
 //  システムがこの関数を呼び出します。
 HCURSOR Ctilt_controlDlg::OnQueryDragIcon()
 {
-	return static_cast<HCURSOR>(m_hIcon);
+    return static_cast<HCURSOR>(m_hIcon);
 }
 
 void Ctilt_controlDlg::OnTimer(UINT_PTR nIDEvent)
