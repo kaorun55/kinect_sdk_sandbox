@@ -41,7 +41,7 @@
     <IncludePath>C:\Program Files %28x86%29\Microsoft Research KinectSDK\inc;$(ProjectDir)../../include;%(AdditionalIncludeDirectories);$(ProjectDir)../../test\gtest-1.6.0\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft Research KinectSDK\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -59,6 +59,7 @@
     </Link>
     <Lib>
       <OutputFile>$(ProjectDir)../../lib\$(TargetName)_d$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(MSRKINECTSDK)\lib</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -70,6 +71,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MSRKINECTSDK)\inc;$(ProjectDir)../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -78,7 +80,8 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <OutputFile>$(SolutionDir)lib\$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>$(ProjectDir)../../lib\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(MSRKINECTSDK)\lib</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>

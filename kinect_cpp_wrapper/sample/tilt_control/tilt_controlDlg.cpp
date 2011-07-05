@@ -54,16 +54,22 @@ BOOL Ctilt_controlDlg::OnInitDialog()
 	ShowWindow(SW_MINIMIZE);
 
 	// TODO: 初期化をここに追加します。
-    kinect_.Initialize( NUI_INITIALIZE_FLAG_USES_COLOR );
-    kinect_.VideoStream().Open( NUI_IMAGE_TYPE::NUI_IMAGE_TYPE_COLOR, NUI_IMAGE_RESOLUTION::NUI_IMAGE_RESOLUTION_640x480 );
+	try {
+		kinect_.Initialize( NUI_INITIALIZE_FLAG_USES_COLOR );
+		kinect_.VideoStream().Open( NUI_IMAGE_TYPE::NUI_IMAGE_TYPE_COLOR, NUI_IMAGE_RESOLUTION::NUI_IMAGE_RESOLUTION_640x480 );
 
-    m_sliderTilt.SetRange( kinect_.CAMERA_ELEVATION_MINIMUM, kinect_.CAMERA_ELEVATION_MAXIMUM );
-    m_angle = kinect_.GetAngle();
+		m_sliderTilt.SetRange( kinect_.CAMERA_ELEVATION_MINIMUM, kinect_.CAMERA_ELEVATION_MAXIMUM );
+		m_angle = kinect_.GetAngle();
 
-    SetTimer( TIMER_ANGLE, 1000, 0 );
-    SetTimer( TIMER_UPDATE, 100, 0 );
+		SetTimer( TIMER_ANGLE, 1000, 0 );
+		SetTimer( TIMER_UPDATE, 100, 0 );
 
-    UpdateData( FALSE );
+		UpdateData( FALSE );
+	}
+	catch ( std::exception& ex ) {
+		MessageBox( ex.what() );
+		OnCancel();
+	}
 
 	return TRUE;  // フォーカスをコントロールに設定した場合を除き、TRUE を返します。
 }
