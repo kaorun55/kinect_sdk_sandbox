@@ -1,4 +1,4 @@
-﻿// 中心の距離を表示するサンプル
+﻿// 身長をはかるサンプル
 #include <iostream>
 #include <sstream>
 
