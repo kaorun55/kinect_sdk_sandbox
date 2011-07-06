@@ -1,4 +1,4 @@
-// ’†S‚Ì‹——£‚ğ•\¦‚·‚éƒTƒ“ƒvƒ‹
+ï»¿// ä¸­å¿ƒã®è·é›¢ã‚’è¡¨ç¤ºã™ã‚‹ã‚µãƒ³ãƒ—ãƒ«
 #include <iostream>
 #include <sstream>
 
@@ -7,10 +7,10 @@
 
 #include <opencv2/opencv.hpp>
 
-// ƒ†[ƒU[‚ÌF‚Ã‚¯
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®è‰²ã¥ã‘
 const UINT colors[] =
 {
-    0xFFFFFFFF,    // ƒ†[ƒU[‚È‚µ
+    0xFFFFFFFF,    // ãƒ¦ãƒ¼ã‚¶ãƒ¼ãªã—
     0xFF00FFFF,
     0xFFFF00FF,
     0xFFFFFF00,
@@ -85,40 +85,40 @@ void main()
         kinect::nui::SkeletonEngine& skeleton = kinect.Skeleton();
         skeleton.Enable();
 
-        // OpenCV‚Ì‰Šúİ’è
+        // OpenCVã®åˆæœŸè¨­å®š
         char* windowName = "player";
         ::cvNamedWindow( windowName );
         cv::Ptr< IplImage > playerImg = ::cvCreateImage( cvSize(video.Width(), video.Height()), IPL_DEPTH_8U, 4 );
 
         while ( 1 ) {
-            // ƒf[ƒ^‚ÌXV‚ğ‘Ò‚Â
+            // ãƒ‡ãƒ¼ã‚¿ã®æ›´æ–°ã‚’å¾…ã¤
             kinect.WaitAndUpdateAll();
 
-            // Ÿ‚ÌƒtƒŒ[ƒ€‚Ìƒf[ƒ^‚ğæ“¾‚·‚é(OpenNI‚Á‚Û‚­)
+            // æ¬¡ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹(OpenNIã£ã½ã)
             kinect::nui::VideoFrame videoMD( video );
             kinect::nui::DepthFrame depthMD( depth );
 
-            // ƒvƒŒ[ƒ„[‚Ì‚Ä‚Á‚Ø‚ñÀ•W
+            // ãƒ—ãƒ¬ãƒ¼ãƒ¤ãƒ¼ã®ã¦ã£ãºã‚“åº§æ¨™
             int maxHeight = 0;
 
-            // ƒf[ƒ^‚ÌƒRƒs[‚Æ•\¦
+            // ãƒ‡ãƒ¼ã‚¿ã®ã‚³ãƒ”ãƒ¼ã¨è¡¨ç¤º
             UINT* img = (UINT*)playerImg->imageData;
             for ( int y = 0; y < videoMD.Height(); ++y ) {
                 for ( int x = 0; x < videoMD.Width(); ++x, ++img ) {
                     int player = depthMD( x / 2, y / 2 ) & 0x3;
                     int depth = depthMD( x / 2, y / 2 ) >> 3;
 
-                    // Å‰‚ÉŒ©‚Â‚¯‚½ƒvƒŒ[ƒ„[À•W‚ğ‚Ä‚Á‚Ø‚ñ‚É‚·‚é
+                    // æœ€åˆã«è¦‹ã¤ã‘ãŸãƒ—ãƒ¬ãƒ¼ãƒ¤ãƒ¼åº§æ¨™ã‚’ã¦ã£ãºã‚“ã«ã™ã‚‹
                     if ( (player != 0) && (maxHeight == 0) ) {
                         maxHeight = y;
                     }
 
-                    // ˆê’èˆÈ“à‚ÅƒvƒŒ[ƒ„‚ª‚¢‚È‚©‚Á‚½ê‡‚Í”’‚­‚·‚é
-                    // ‚¿‚ç‚©‚Á‚½‰Æ‚Ì‘Îô
+                    // ä¸€å®šä»¥å†…ã§ãƒ—ãƒ¬ãƒ¼ãƒ¤ãŒã„ãªã‹ã£ãŸå ´åˆã¯ç™½ãã™ã‚‹
+                    // ã¡ã‚‰ã‹ã£ãŸå®¶ã®å¯¾ç­–
                     if ( (depth >= 1500) && (player == 0) ) {
                         *img = 0xFFFFFFFF;
                     }
-                    // ‚»‚¤‚Å‚È‚¯‚ê‚Î•`‰æ‚·‚é
+                    // ãã†ã§ãªã‘ã‚Œã°æç”»ã™ã‚‹
                     else {
                         *img = videoMD( x, y ) & colors[player];
                     }
@@ -135,11 +135,11 @@ void main()
 
                         kinect::nui::SkeletonData& skeleton = skeletonMD[i];
 
-                        // —‘z
-                        // HEAD‚ÍŠç‚Ì’†S‚È‚Ì‚ÅANuiTransformSkeletonToDepthImageF‚µ‚½YÀ•W‚ğã‚Éã‚ª‚Á‚ÄAƒ†[ƒU[‚ğ¯•Ê‚µ‚Ä‚éˆê”Ôã‚Ü‚Ås‚­
-                        // ‚»‚ÌÀ•W‚ğNuiTransformDepthImageToSkeletonF‚µ‚½‚Ì‚ªA“ª‚Ì‚Ä‚Á‚Ø‚ñ‚ÌÀÀ•W
+                        // ç†æƒ³
+                        // HEADã¯é¡”ã®ä¸­å¿ƒãªã®ã§ã€NuiTransformSkeletonToDepthImageFã—ãŸYåº§æ¨™ã‚’ä¸Šã«ä¸ŠãŒã£ã¦ã€ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚’è­˜åˆ¥ã—ã¦ã‚‹ä¸€ç•ªä¸Šã¾ã§è¡Œã
+                        // ãã®åº§æ¨™ã‚’NuiTransformDepthImageToSkeletonFã—ãŸã®ãŒã€é ­ã®ã¦ã£ãºã‚“ã®å®Ÿåº§æ¨™
 
-                        // À•W‚ğ•\¦À•WŒn‚É‚·‚é
+                        // åº§æ¨™ã‚’è¡¨ç¤ºåº§æ¨™ç³»ã«ã™ã‚‹
                         kinect::nui::SkeletonData::Point p = skeleton.TransformSkeletonToDepthImage( NUI_SKELETON_POSITION_HEAD );
                         kinect::nui::SkeletonData::Point p2;
                         p2.x = p.x * videoMD.Width() + 0.5f;
@@ -148,20 +148,20 @@ void main()
                         int player = depthMD( p2.x / 2, p2.y / 2 ) & 0x7;
                         int depth = depthMD( p2.x / 2, p2.y / 2 ) >> 3;
 
-                        // Œ»À
-                        // ‚Ä‚Á‚Ø‚ñÀ•W‚ğİ’è
+                        // ç¾å®Ÿ
+                        // ã¦ã£ãºã‚“åº§æ¨™ã‚’è¨­å®š
                         if ( maxHeight != 0 ) {
                             p2.y = maxHeight;
                         }
                         cvCircle(playerImg, cvPoint( p2.x, p2.y ) , 5,  cvScalar( 0, 255, 0 ), -1 );
 
-                        // À•W‚ğŒ»ÀÀ•WŒn‚É–ß‚·
+                        // åº§æ¨™ã‚’ç¾å®Ÿåº§æ¨™ç³»ã«æˆ»ã™
                         kinect::nui::SkeletonData::Point p3;
                         p3.x = (p2.x - 0.5f) / videoMD.Width();
                         p3.y = (p2.y - 0.5f) / videoMD.Height();
                         Vector4 v = NuiTransformDepthImageToSkeletonF( p3.x, p3.y, p.depth );
 
-                        // À•W‚Ì’PˆÊ‚Íƒ[ƒgƒ‹‚È‚Ì‚ÅAƒZƒ“ƒ`‚É‚·‚éB‚¿‚È‚İ‚ÉÀ•W‚ÍƒJƒƒ‰‚ÌˆÊ’u‚ğ0‚Æ‚µ‚Ä³•‰‚Ì’l‚É‚È‚é‚Á‚Û‚¢
+                        // åº§æ¨™ã®å˜ä½ã¯ãƒ¡ãƒ¼ãƒˆãƒ«ãªã®ã§ã€ã‚»ãƒ³ãƒã«ã™ã‚‹ã€‚ã¡ãªã¿ã«åº§æ¨™ã¯ã‚«ãƒ¡ãƒ©ã®ä½ç½®ã‚’0ã¨ã—ã¦æ­£è² ã®å€¤ã«ãªã‚‹ã£ã½ã„
                         float head = v.y * 100;
                         float foot = skeleton[NUI_SKELETON_POSITION_FOOT_LEFT].y * 100;
                         std::cout << "head : " << head << " foot : " << foot << " height : " << abs(foot) + abs(head) << std::endl;
@@ -171,7 +171,7 @@ void main()
 
             ::cvShowImage( windowName, playerImg );
 
-            // 1‰æ–Ê•ª‚Ì‘
+            // 1ç”»é¢åˆ†ã®æ›¸è¾¼
             std::stringstream ss;
             ss << "jpg\\" << ::GetTickCount() << ".jpg";
             cvSaveImage( ss.str().c_str(), playerImg );
