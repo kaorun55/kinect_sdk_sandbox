@@ -44,6 +44,8 @@ namespace kinect {
 				return skeletonData_.SkeletonPositions[index];
 			}
 
+            DWORD GetUserIndex() const { return skeletonData_.dwUserIndex; }
+
         private:
 
             SkeletonData( NUI_SKELETON_DATA& skeletonData )

@@ -98,14 +98,22 @@ void main()
             kinect::nui::VideoFrame videoMD( video );
             kinect::nui::DepthFrame depthMD( depth );
 
+            // プレーヤーのてっぺん座標
+            int maxHeight = 0;
+
             // データのコピーと表示
             UINT* img = (UINT*)playerImg->imageData;
             for ( int y = 0; y < videoMD.Height(); ++y ) {
                 for ( int x = 0; x < videoMD.Width(); ++x, ++img ) {
-                    int player = depthMD( x / 2, y / 2 ) & 0x7;
+                    int player = depthMD( x / 2, y / 2 ) & 0x3;
                     int depth = depthMD( x / 2, y / 2 ) >> 3;
 
-                    // 1.5m以内でプレーヤがいなかった場合は白くする
+                    // 最初に見つけたプレーヤー座標をてっぺんにする
+                    if ( (player != 0) && (maxHeight == 0) ) {
+                        maxHeight = y;
+                    }
+
+                    // 一定以内でプレーヤがいなかった場合は白くする
                     // ちらかった家の対策
                     if ( (depth >= 1500) && (player == 0) ) {
                         *img = 0xFFFFFFFF;
@@ -127,22 +135,33 @@ void main()
 
                         kinect::nui::SkeletonData& skeleton = skeletonMD[i];
 
+                        // 理想
                         // HEADは顔の中心なので、NuiTransformSkeletonToDepthImageFしたY座標を上に上がって、ユーザーを識別してる一番上まで行く
                         // その座標をNuiTransformDepthImageToSkeletonFしたのが、頭のてっぺんの実座標
+
+                        // 座標を表示座標系にする
                         kinect::nui::SkeletonData::Point p = skeleton.TransformSkeletonToDepthImage( NUI_SKELETON_POSITION_HEAD );
-                        p.x = p.x * videoMD.Width() + 0.5f;
-                        p.y = p.y * videoMD.Height() + 0.5f;
+                        kinect::nui::SkeletonData::Point p2;
+                        p2.x = p.x * videoMD.Width() + 0.5f;
+                        p2.y = p.y * videoMD.Height() + 0.5f;
 
-                        int player = depthMD( p.x / 2, p.y / 2 ) & 0x7;
-                        int depth = depthMD( p.x / 2, p.y / 2 ) >> 3;
+                        int player = depthMD( p2.x / 2, p2.y / 2 ) & 0x7;
+                        int depth = depthMD( p2.x / 2, p2.y / 2 ) >> 3;
 
-                        cvCircle(playerImg, cvPoint( p.x, p.y ) , 5,  cvScalar( 0, 255, 0 ), -1 );
+                        // 現実
+                        // てっぺん座標を設定
+                        if ( maxHeight != 0 ) {
+                            p2.y = maxHeight;
+                        }
+                        cvCircle(playerImg, cvPoint( p2.x, p2.y ) , 5,  cvScalar( 0, 255, 0 ), -1 );
 
+                        // 座標を現実座標系に戻す
+                        kinect::nui::SkeletonData::Point p3;
+                        p3.x = (p2.x - 0.5f) / videoMD.Width();
+                        p3.y = (p2.y - 0.5f) / videoMD.Height();
+                        Vector4 v = NuiTransformDepthImageToSkeletonF( p3.x, p3.y, p.depth );
 
-                        p.x = (p.x - 0.5f) / videoMD.Width();
-                        p.y = (p.y - 0.5f) / videoMD.Height();
-                        Vector4 v = NuiTransformDepthImageToSkeletonF( p.x, p.y, p.depth );
-
+                        // 座標の単位はメートルなので、センチにする。ちなみに座標はカメラの位置を0として正負の値になるっぽい
                         float head = v.y * 100;
                         float foot = skeleton[NUI_SKELETON_POSITION_FOOT_LEFT].y * 100;
                         std::cout << "head : " << head << " foot : " << foot << " height : " << abs(foot) + abs(head) << std::endl;
