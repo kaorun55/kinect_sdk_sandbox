@@ -34,3 +34,5 @@ ipch/
 *.jpg
 *.png
 doc/
+*.wav
+

@@ -139,7 +139,9 @@ bool PickDevice(IMMDevice **DeviceToUse, bool *IsDefaultDevice, ERole *DefaultDe
 			retValue = false;
 			goto Exit;
 		}
-		printf_s("    %d:  %S\n", i, deviceName);
+
+        // デバイス名がうまく表示されなかったので変えた
+		wprintf(L"    %d:  %s \n", i, deviceName);
 		free(deviceName);
 	}
 	wchar_t choice[10];
