@@ -1,0 +1,11 @@
+﻿<Window x:Class="kinect_toolkit.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="564" Width="662" Loaded="Window_Loaded">
+    <Grid>
+        <Image Height="480" HorizontalAlignment="Left" Name="ColorImage" Stretch="Fill" VerticalAlignment="Top" Width="640" Margin="0,44,0,0" />
+        <Canvas Height="480" HorizontalAlignment="Left" Margin="0,44,0,0" Name="skeletonCanvas" VerticalAlignment="Top" Width="640" />
+        <Label Content="Label" Height="38" HorizontalAlignment="Right" Name="Gesture" VerticalAlignment="Top" Width="338" FontSize="20" Margin="0,0,302,0" />
+        <Label Content="Label" FontSize="20" Height="38" HorizontalAlignment="Right" Name="labelPose" VerticalAlignment="Top" Width="296" />
+    </Grid>
+</Window>
