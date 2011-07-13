@@ -35,6 +35,9 @@ namespace Speech
     class Program
     {
         private const string RecognizerId = "SR_MS_en-US_Kinect_10.0";
+        private static BingTranslate.LanguageServiceClient translator = new BingTranslate.LanguageServiceClient(
+                                                                        "BasicHttpBinding_LanguageService",
+                                                                        "http://api.microsofttranslator.com/V1/soap.svc" );
 
         static void Main(string[] args)
         {
@@ -109,14 +112,15 @@ namespace Speech
 
         static void SreSpeechHypothesized(object sender, SpeechHypothesizedEventArgs e)
         {
-            Console.Write( "\rSpeech Hypothesized: \t{0}", e.Result.Text );
+            Console.Write( "\rSpeech Hypothesized: \t{0}    ", e.Result.Text );
         }
 
         static void SreSpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
 			//This first release of the Kinect language pack doesn't have a reliable confidence model, so 
 			//we don't use e.Result.Confidence here.
-            Console.WriteLine( "\nSpeech Recognized: \t{0}", e.Result.Text );
+            Console.Write( "\nSpeech Recognized: \t{0}", e.Result.Text );
+            Console.WriteLine( "\t{0}", translator.Translate( "AppID", e.Result.Text, "en", "ja" ) );
         }
 
         private static void DumpRecordedAudio(RecognizedAudio audio)
