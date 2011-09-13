@@ -30,6 +30,12 @@
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Text = "Form1";
+            this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler( this.Form1_FormClosing );
+            this.Load += new System.EventHandler( this.Form1_Load );
+            this.Paint += new System.Windows.Forms.PaintEventHandler( this.Form1_Paint );
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler( this.Form1_KeyDown );
+            this.ResumeLayout( false );
         }
 
         #endregion

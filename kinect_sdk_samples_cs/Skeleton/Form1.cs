@@ -29,7 +29,7 @@ namespace Skeleton
 
                 // カメラサイズのイメージを作成(8bitのRGB) ... (3)
                 bitmap = new Bitmap( runtime.VideoStream.Width, runtime.VideoStream.Height,
-                            System.Drawing.Imaging.PixelFormat.Format24bppRgb );
+                            System.Drawing.Imaging.PixelFormat.Format32bppRgb );
 
                 // ウィンドウサイズをカメラサイズに合わせる
                 ClientSize = new Size( runtime.VideoStream.Width, runtime.VideoStream.Height );
