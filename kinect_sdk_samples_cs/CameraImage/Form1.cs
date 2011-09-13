@@ -21,28 +21,26 @@ namespace CameraImage
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form1_Load( object sender, EventArgs e )
         {
-            try
-            {
+            try {
                 // 初期化
                 xnInitialize();
 
                 // カメラサイズのイメージを作成(8bitのRGB) ... (3)
                 bitmap = new Bitmap( runtime.VideoStream.Width, runtime.VideoStream.Height,
-                            System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+                            System.Drawing.Imaging.PixelFormat.Format24bppRgb );
 
                 // ウィンドウサイズをカメラサイズに合わせる
                 ClientSize = new Size( runtime.VideoStream.Width, runtime.VideoStream.Height );
 
                 // 画像更新のためのスレッドを作成
                 shouldRun = true;
-                readerThread = new Thread(ReaderThread);
+                readerThread = new Thread( ReaderThread );
                 readerThread.Start();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+            catch ( Exception ex ) {
+                MessageBox.Show( ex.Message );
                 Close();
             }
         }
@@ -50,71 +48,62 @@ namespace CameraImage
         // 画像データ更新スレッド
         private void ReaderThread()
         {
-            try
-            {
-                while (shouldRun)
-                {
+            try {
+                while ( shouldRun ) {
                     // 描画したら、画面を無効にして再描画する
                     xnDraw();
                     Invalidate();
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+            catch ( Exception ex ) {
+                MessageBox.Show( ex.Message );
             }
         }
 
         // フォームが閉じられる
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void Form1_FormClosing( object sender, FormClosingEventArgs e )
         {
-            try
-            {
+            try {
                 // スレッドの終了
                 shouldRun = false;
-                if (readerThread != null)
-                {
+                if ( readerThread != null ) {
                     readerThread.Join();
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+            catch ( Exception ex ) {
+                MessageBox.Show( ex.Message );
             }
         }
 
         // 再描画
-        private void Form1_Paint(object sender, PaintEventArgs e)
+        private void Form1_Paint( object sender, PaintEventArgs e )
         {
-            try
-            {
-                lock (this)
-                {
-                    e.Graphics.DrawImage(bitmap, 0, 0);
+            try {
+                lock ( this ) {
+                    if ( bitmap != null ) {
+                        e.Graphics.DrawImage( bitmap, 0, 0 );
+                    }
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+            catch ( Exception ex ) {
+                MessageBox.Show( ex.Message );
             }
         }
 
         // このメソッドをオーバーライドすることでちらつきがなくなる
-        protected override void OnPaintBackground(PaintEventArgs pevent)
+        protected override void OnPaintBackground( PaintEventArgs pevent )
         {
         }
 
         // キーイベント
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        private void Form1_KeyDown( object sender, KeyEventArgs e )
         {
             // "Q"で終了。それ以外はアプリケーション固有の処理とする
-            if (e.KeyCode == Keys.Q)
-            {
+            if ( e.KeyCode == Keys.Q ) {
                 Close();
             }
-            else
-            {
-                xnKeyDown(e.KeyCode);
+            else {
+                xnKeyDown( e.KeyCode );
             }
         }
     }
