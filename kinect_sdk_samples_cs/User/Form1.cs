@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 
-namespace Depth
+namespace User
 {
     public partial class Form1 : Form
     {

@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraImage", "CameraImage\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Depth", "Depth\Depth.csproj", "{29E73D2A-5A39-4787-8840-EFA262D8C535}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User", "User\User.csproj", "{12394B3E-7907-48E3-8335-3DF0C920BBBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skeleton", "Skeleton\Skeleton.csproj", "{289191B8-BC2E-4D7F-B97D-301E72A3ABE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -25,6 +29,14 @@ Global
 		{29E73D2A-5A39-4787-8840-EFA262D8C535}.Debug|x86.Build.0 = Debug|x86
 		{29E73D2A-5A39-4787-8840-EFA262D8C535}.Release|x86.ActiveCfg = Release|x86
 		{29E73D2A-5A39-4787-8840-EFA262D8C535}.Release|x86.Build.0 = Release|x86
+		{12394B3E-7907-48E3-8335-3DF0C920BBBF}.Debug|x86.ActiveCfg = Debug|x86
+		{12394B3E-7907-48E3-8335-3DF0C920BBBF}.Debug|x86.Build.0 = Debug|x86
+		{12394B3E-7907-48E3-8335-3DF0C920BBBF}.Release|x86.ActiveCfg = Release|x86
+		{12394B3E-7907-48E3-8335-3DF0C920BBBF}.Release|x86.Build.0 = Release|x86
+		{289191B8-BC2E-4D7F-B97D-301E72A3ABE8}.Debug|x86.ActiveCfg = Debug|x86
+		{289191B8-BC2E-4D7F-B97D-301E72A3ABE8}.Debug|x86.Build.0 = Debug|x86
+		{289191B8-BC2E-4D7F-B97D-301E72A3ABE8}.Release|x86.ActiveCfg = Release|x86
+		{289191B8-BC2E-4D7F-B97D-301E72A3ABE8}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

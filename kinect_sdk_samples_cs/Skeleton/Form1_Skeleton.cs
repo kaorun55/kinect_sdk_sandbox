@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using Microsoft.Research.Kinect.Nui;
 using System.Runtime.InteropServices;
 
-namespace Depth
+namespace Skeleton
 {
     // アプリケーション固有の処理を記述
     partial class Form1
@@ -20,11 +20,10 @@ namespace Depth
         private void xnInitialize()
         {
             // ランタイムの初期化
-            runtime.Initialize( RuntimeOptions.UseColor | RuntimeOptions.UseDepth );
+            runtime.Initialize( RuntimeOptions.UseColor | RuntimeOptions.UseSkeletalTracking );
 
-            // ビデオ、デプスストリームの作成
+            // ビデオストリームの作成
             runtime.VideoStream.Open( ImageStreamType.Video, 2, ImageResolution.Resolution640x480, ImageType.Color );
-            runtime.DepthStream.Open( ImageStreamType.Depth, 2, ImageResolution.Resolution320x240, ImageType.Depth );
         }
 
         // 描画
@@ -32,7 +31,7 @@ namespace Depth
         {
             // ビデオ、デプスの更新を待ち、データを取得する
             var video = runtime.VideoStream.GetNextFrame( 0 );
-            var depth = runtime.DepthStream.GetNextFrame( 0 );
+            var skeleton = runtime.SkeletonEngine.GetNextFrame( 0 );
 
             // 画像の作成
             lock ( this ) {
@@ -43,19 +42,7 @@ namespace Depth
                 Marshal.Copy( video.Image.Bits, 0, data.Scan0, video.Image.Bits.Length );
                 bitmap.UnlockBits( data );
 
-                // 中心点の距離を表示
-                Graphics g = Graphics.FromImage( bitmap );
-
-                int x = (int)video.Image.Width / 2;
-                int y = (int)video.Image.Height / 2;
-                g.FillEllipse( brush, x - 10, y - 10, 20, 20 );
-
-                // depthの中心点を取る
-                string message = /*depth.Image.Bits[x, y] +*/ "mm";
-                // e.ImageFrame.Image.Bits[ x + y * e.ImageFrame.Image.Width * 2 ]
-                // e.ImageFrame.Image.Bits[ x + y * e.ImageFrame.Image.Width * 2 + 1]
-                // depth = (int)( (Bits[1] << 8) | (Bits[0]) );
-                g.DrawString( message, font, brush, x, y );
+                // パーツの座標を取得して描画する
             }
         }
 
