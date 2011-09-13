@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "audio_device_info", "audio_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraImage", "CameraImage\CameraImage.csproj", "{D0EC01EB-E508-4432-A395-29E63D6C8EBC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Depth", "Depth\Depth.csproj", "{29E73D2A-5A39-4787-8840-EFA262D8C535}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -19,6 +21,10 @@ Global
 		{D0EC01EB-E508-4432-A395-29E63D6C8EBC}.Debug|x86.Build.0 = Debug|x86
 		{D0EC01EB-E508-4432-A395-29E63D6C8EBC}.Release|x86.ActiveCfg = Release|x86
 		{D0EC01EB-E508-4432-A395-29E63D6C8EBC}.Release|x86.Build.0 = Release|x86
+		{29E73D2A-5A39-4787-8840-EFA262D8C535}.Debug|x86.ActiveCfg = Debug|x86
+		{29E73D2A-5A39-4787-8840-EFA262D8C535}.Debug|x86.Build.0 = Debug|x86
+		{29E73D2A-5A39-4787-8840-EFA262D8C535}.Release|x86.ActiveCfg = Release|x86
+		{29E73D2A-5A39-4787-8840-EFA262D8C535}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
