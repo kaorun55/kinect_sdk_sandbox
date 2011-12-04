@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User", "User\User.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skeleton", "Skeleton\Skeleton.csproj", "{289191B8-BC2E-4D7F-B97D-301E72A3ABE8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraImageWPF", "CameraImageWPF\CameraImageWPF.csproj", "{0D54A397-4319-4273-9256-70FABC3C5DFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -37,6 +39,10 @@ Global
 		{289191B8-BC2E-4D7F-B97D-301E72A3ABE8}.Debug|x86.Build.0 = Debug|x86
 		{289191B8-BC2E-4D7F-B97D-301E72A3ABE8}.Release|x86.ActiveCfg = Release|x86
 		{289191B8-BC2E-4D7F-B97D-301E72A3ABE8}.Release|x86.Build.0 = Release|x86
+		{0D54A397-4319-4273-9256-70FABC3C5DFE}.Debug|x86.ActiveCfg = Debug|x86
+		{0D54A397-4319-4273-9256-70FABC3C5DFE}.Debug|x86.Build.0 = Debug|x86
+		{0D54A397-4319-4273-9256-70FABC3C5DFE}.Release|x86.ActiveCfg = Release|x86
+		{0D54A397-4319-4273-9256-70FABC3C5DFE}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

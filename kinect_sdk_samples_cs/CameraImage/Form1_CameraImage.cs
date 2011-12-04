@@ -16,7 +16,7 @@ namespace CameraImage
         private void xnInitialize()
         {
             // ランタイムの初期化 ... (1)
-            runtime = new Runtime();
+            runtime = Runtime.Kinects[0];
             runtime.Initialize( RuntimeOptions.UseColor );
 
             // ビデオ、デプスストリームの作成

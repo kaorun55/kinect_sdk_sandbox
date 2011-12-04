@@ -21,7 +21,7 @@ namespace Depth
         private void xnInitialize()
         {
             // ランタイムの初期化
-            runtime = new Runtime();
+            runtime = Runtime.Kinects[0];
             runtime.Initialize( RuntimeOptions.UseColor | RuntimeOptions.UseDepth );
 
             // ビデオ、デプスストリームの作成

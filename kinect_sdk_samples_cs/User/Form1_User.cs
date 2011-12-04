@@ -20,7 +20,7 @@ namespace User
         private void xnInitialize()
         {
             // ランタイムの初期化
-            runtime = new Runtime();
+            runtime = Runtime.Kinects[0];
             runtime.Initialize( RuntimeOptions.UseColor | RuntimeOptions.UseDepthAndPlayerIndex );
 
             // ビデオ、デプスストリームの作成
