@@ -74,7 +74,7 @@ namespace CameraImageWPF
 
         void kinect_VideoFrameReady( object sender, ImageFrameReadyEventArgs e )
         {
-            // 抜かれた瞬間のKINECTは、InstanceIndex が 0 になる
+            // 抜かれた瞬間のKINECTは、InstanceIndex が -1 になる
             Runtime kinect = sender as Runtime;
             if ( (kinect != null) && (kinect.InstanceIndex >= 0) ) {
                 PlanarImage srouce = e.ImageFrame.Image;
