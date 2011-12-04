@@ -50,6 +50,7 @@ namespace User
                         // ユーザーIDと距離を取得する
                         int playerIndex = byte0 & 0x7;
                         int distance = byte1 << 5 | byte0 >> 3;
+
                         if ( playerIndex != 0 ) {
                             // 距離座標をカメラ座標に変換する
                             int videoX = 0, videoY = 0;
@@ -57,7 +58,7 @@ namespace User
                                    new ImageViewArea(), x, y, 0, out videoX, out videoY ); 
 
                             int videoIndex = (videoX + (videoY * video.Image.Width)) * 4;
-                            videoIndex =Math.Min( videoIndex, video.Image.Bits.Length - 4 );
+                            videoIndex = Math.Min( videoIndex, video.Image.Bits.Length - 4 );
                             video.Image.Bits[videoIndex] = color[playerIndex].B;
                             video.Image.Bits[videoIndex + 1] = color[playerIndex].G;
                             video.Image.Bits[videoIndex + 2] = color[playerIndex].R;
