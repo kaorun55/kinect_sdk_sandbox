@@ -6,7 +6,7 @@ using Microsoft.Research.Kinect.Nui;
 using System.Threading;
 using System.Windows.Threading;
 
-namespace UserWPF
+namespace SkeletonWPF
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
@@ -21,7 +21,8 @@ namespace UserWPF
             InitializeComponent();
 
             Runtime kinect = Runtime.Kinects[0];
-            kinect.Initialize( RuntimeOptions.UseColor | RuntimeOptions.UseDepthAndPlayerIndex );
+            kinect.Initialize( RuntimeOptions.UseColor | RuntimeOptions.UseDepthAndPlayerIndex |
+                                RuntimeOptions.UseSkeletalTracking );
             kinect.VideoStream.Open( ImageStreamType.Video, 2,
                 ImageResolution.Resolution640x480, ImageType.Color );
             kinect.DepthStream.Open( ImageStreamType.Depth, 2,
@@ -49,6 +50,7 @@ namespace UserWPF
                 Runtime kinect = Runtime.Kinects[0];
                 var image = kinect.VideoStream.GetNextFrame( 0 );
                 var depth = kinect.DepthStream.GetNextFrame( 0 );
+                var skeleton = kinect.SkeletonEngine.GetNextFrame( 0 );
 
                 var size  =image.Image.Width * image.Image.Height;
                 for ( int i = 0; i < size; i++ ) {
@@ -63,14 +65,40 @@ namespace UserWPF
                     image.Image.Bits[imageIndex + 2] *= userColor[userId].B;
                 }
 
+                foreach ( var s in skeleton.Skeletons ) {
+                    if ( s.TrackingState == SkeletonTrackingState.Tracked ) {
+                        foreach ( Joint j in s.Joints ) {
+                            var point = GetVideoPoint( j );
+
+                            // 円を書く
+                        }
+                    }
+                }
+
                 this.Dispatcher.BeginInvoke( DispatcherPriority.Background, new Action( () =>
-                    {
-                        var bitmap = image.Image;
-                        image1.Source = BitmapImage.Create( bitmap.Width, bitmap.Height, 96, 96,
-                                                            PixelFormats.Bgr32, null, bitmap.Bits,
-                                                            bitmap.Width * bitmap.BytesPerPixel );
-                    } ) );
+                {
+                    var bitmap = image.Image;
+                    image1.Source = BitmapImage.Create( bitmap.Width, bitmap.Height, 96, 96,
+                                                        PixelFormats.Bgr32, null, bitmap.Bits,
+                                                        bitmap.Width * bitmap.BytesPerPixel );
+                } ) );
             }
+        }
+
+
+        private Point GetVideoPoint( Joint joint )
+        {
+            Runtime kinect = Runtime.Kinects[0];
+            float depthX = 0, depthY = 0;
+            kinect.SkeletonEngine.SkeletonToDepthImage( joint.Position, out depthX, out depthY );
+            depthX = Math.Min( depthX * kinect.DepthStream.Width, kinect.DepthStream.Width );
+            depthY = Math.Min( depthY * kinect.DepthStream.Height, kinect.DepthStream.Height );
+
+            int videoX = 0, videoY = 0;
+            kinect.NuiCamera.GetColorPixelCoordinatesFromDepthPixel( ImageResolution.Resolution640x480,
+                new ImageViewArea(), (int)depthX, (int)depthY, 0, out videoX, out videoY );
+
+            return new Point( Math.Min( videoX, kinect.VideoStream.Width ), Math.Min( videoY, kinect.VideoStream.Height ) );
         }
 
         private void Window_Closing( object sender, System.ComponentModel.CancelEventArgs e )
