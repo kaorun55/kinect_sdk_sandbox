@@ -20,8 +20,13 @@ namespace Skeleton
         private void xnInitialize()
         {
             // ランタイムの初期化
+<<<<<<< HEAD
             runtime = Runtime.Kinects[0];
             runtime.Initialize( RuntimeOptions.UseColor | RuntimeOptions.UseDepthAndPlayerIndex );
+=======
+            runtime = new Runtime();
+            runtime.Initialize( RuntimeOptions.UseColor | RuntimeOptions.UseDepthAndPlayerIndex | RuntimeOptions.UseSkeletalTracking );
+>>>>>>> wpf_sample
 
             // ビデオ、デプスストリームの作成
             runtime.VideoStream.Open( ImageStreamType.Video, 2, ImageResolution.Resolution640x480, ImageType.Color );
@@ -32,8 +37,8 @@ namespace Skeleton
         private void xnDraw()
         {
             // ビデオ、デプスの更新を待ち、データを取得する
-            var video = runtime.VideoStream.GetNextFrame( 0 );
-            var skeleton = runtime.SkeletonEngine.GetNextFrame( 50 );   // 0だとメモリがどんどん増える
+            ImageFrame video = runtime.VideoStream.GetNextFrame( 0 );
+            SkeletonFrame skeleton = runtime.SkeletonEngine.GetNextFrame( 50 );   // 0だとメモリがどんどん増える
             if ( (video == null) || (skeleton == null) ) {
                 return;
             }

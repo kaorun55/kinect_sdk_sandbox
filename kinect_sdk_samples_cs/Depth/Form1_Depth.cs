@@ -33,8 +33,8 @@ namespace Depth
         private void xnDraw()
         {
             // ビデオ、デプスの更新を待ち、データを取得する
-            var video = runtime.VideoStream.GetNextFrame( 50 );
-            var depth = runtime.DepthStream.GetNextFrame( 50 );
+            ImageFrame video = runtime.VideoStream.GetNextFrame( 50 );
+            ImageFrame depth = runtime.DepthStream.GetNextFrame( 50 );
             if ( (video == null) || (depth == null) ) {
                 return;
             }
@@ -58,7 +58,7 @@ namespace Depth
                 // depthの中心点を取る
                 int width = depth.Image.Width;
                 int height = depth.Image.Height;
-                int index = ((width / 2) + ((Height / 2) * width)) * 2;
+                int index = ((width / 2) + ((height / 2) * width)) * 2;
                 byte byte0 = depth.Image.Bits[index];
                 byte byte1 = depth.Image.Bits[index + 1];
 
