@@ -1,8 +1,11 @@
 ﻿using System;
-using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Microsoft.Research.Kinect.Audio;
+using System.IO;
 
-namespace Audio
+namespace AudioDiretion
 {
     class Program
     {
@@ -14,7 +17,8 @@ namespace Audio
                 // OptibeamArrayOnly:マルチチャネルのマイクのみを使用する(エコーキャンセルを使用しない)
                 // OptibeamArrayAndAec:マルチチャネルのマイクと、エコーキャンセルを使用する)
                 // SingleChannelNsAgc:シングルチャネルのマイクのみを使用する(エコーキャンセルを使用しない)
-                source.SystemMode = SystemMode.SingleChannelAec;
+                source.SystemMode = SystemMode.OptibeamArrayOnly;
+                source.BeamChanged += new EventHandler<BeamChangedEventArgs>( source_BeamChanged );
 
                 using ( Stream audioStream = source.Start() ) {
                     Console.WriteLine( "Start... Press any key" );
@@ -24,9 +28,20 @@ namespace Audio
                     while ( !Console.KeyAvailable ) {
                         int count = audioStream.Read( buffer, 0, buffer.Length );
                         player.Output( buffer );
+
+                        // 詳細な音源方向の信頼性がある場合、音源方向を更新する
+                        if ( source.SoundSourcePositionConfidence > 0.9 ) {
+                            Console.Write( "詳細な音源方向(推定) : {0}\t\tビーム方向 : {1}\r",
+                                source.SoundSourcePosition, source.MicArrayBeamAngle );
+                        }
                     }
                 }
             }
+        }
+
+        static void source_BeamChanged( object sender, BeamChangedEventArgs e )
+        {
+            Console.WriteLine( "ビーム方向が変わった:{0}", e.Angle );
         }
     }
 }

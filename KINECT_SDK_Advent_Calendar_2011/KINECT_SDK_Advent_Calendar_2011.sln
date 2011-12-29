@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StreamingWavePlayer", "Stre
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audio", "Audio\Audio.csproj", "{64E6E6AB-7B3C-45FA-834C-01515BE8EDCA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioDiretion", "AudioDiretion\AudioDiretion.csproj", "{013BB689-7262-4182-9A1A-85FBF3E08C41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -83,6 +85,16 @@ Global
 		{64E6E6AB-7B3C-45FA-834C-01515BE8EDCA}.Release|Win32.ActiveCfg = Release|x86
 		{64E6E6AB-7B3C-45FA-834C-01515BE8EDCA}.Release|x86.ActiveCfg = Release|x86
 		{64E6E6AB-7B3C-45FA-834C-01515BE8EDCA}.Release|x86.Build.0 = Release|x86
+		{013BB689-7262-4182-9A1A-85FBF3E08C41}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{013BB689-7262-4182-9A1A-85FBF3E08C41}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{013BB689-7262-4182-9A1A-85FBF3E08C41}.Debug|Win32.ActiveCfg = Debug|x86
+		{013BB689-7262-4182-9A1A-85FBF3E08C41}.Debug|x86.ActiveCfg = Debug|x86
+		{013BB689-7262-4182-9A1A-85FBF3E08C41}.Debug|x86.Build.0 = Debug|x86
+		{013BB689-7262-4182-9A1A-85FBF3E08C41}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{013BB689-7262-4182-9A1A-85FBF3E08C41}.Release|Mixed Platforms.Build.0 = Release|x86
+		{013BB689-7262-4182-9A1A-85FBF3E08C41}.Release|Win32.ActiveCfg = Release|x86
+		{013BB689-7262-4182-9A1A-85FBF3E08C41}.Release|x86.ActiveCfg = Release|x86
+		{013BB689-7262-4182-9A1A-85FBF3E08C41}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
