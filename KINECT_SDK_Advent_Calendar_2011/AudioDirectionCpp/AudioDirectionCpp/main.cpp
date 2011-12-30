@@ -31,8 +31,7 @@
 
 #include "WaveAudio.h"
 
-#define CHECKHR(x) hr = x; if (FAILED(hr)) {printf("%d: %08X\n", __LINE__, hr); throw std::exception();}
-#define CHECK_RET(hr, message) if (FAILED(hr)) { printf("%s: %08X\n", message, hr); throw std::exception();}
+#define CHECKHR( x ) { HRESULT hr = x; if (FAILED(hr)) { char buf[256]; sprintf( buf, "%d: %08X\n", __LINE__, hr ); throw std::runtime_error( buf );} }
 
 
 #pragma comment( lib, "Msdmo.lib" )
@@ -44,8 +43,6 @@
 class CStaticMediaBuffer : public IMediaBuffer {
 public:
    CStaticMediaBuffer() {}
-   CStaticMediaBuffer(BYTE *pData, ULONG ulSize, ULONG ulData) :
-      m_pData(pData), m_ulSize(ulSize), m_ulData(ulData), m_cRef(1) {}
    STDMETHODIMP_(ULONG) AddRef() { return 2; }
    STDMETHODIMP_(ULONG) Release() { return 1; }
    STDMETHODIMP QueryInterface(REFIID riid, void **ppv) {
@@ -62,247 +59,66 @@ public:
       else
          return E_NOINTERFACE;
    }
-   STDMETHODIMP SetLength(DWORD ulLength) {m_ulData = ulLength; return NOERROR;}
-   STDMETHODIMP GetMaxLength(DWORD *pcbMaxLength) {*pcbMaxLength = m_ulSize; return NOERROR;}
-   STDMETHODIMP GetBufferAndLength(BYTE **ppBuffer, DWORD *pcbLength) {
-      if (ppBuffer) *ppBuffer = m_pData;
-      if (pcbLength) *pcbLength = m_ulData;
-      return NOERROR;
+
+   STDMETHODIMP SetLength( DWORD ulLength ) {
+       m_ulData = ulLength;
+       return NOERROR;
    }
-   void Init(BYTE *pData, ULONG ulSize, ULONG ulData) {
-        m_pData = pData;
-        m_ulSize = ulSize;
-        m_ulData = ulData;
-    }
+
+   STDMETHODIMP GetMaxLength(DWORD *pcbMaxLength) {
+       *pcbMaxLength = buffer_.size();
+       return NOERROR;
+   }
+
+   STDMETHODIMP GetBufferAndLength(BYTE **ppBuffer, DWORD *pcbLength) {
+        if ( ppBuffer )
+            *ppBuffer = &buffer_[0];
+
+        if ( pcbLength )
+            *pcbLength = m_ulData;
+
+        return NOERROR;
+   }
+
+   void Clear()
+   {
+        m_ulData = 0;
+   }
+
+   ULONG GetDataLength() const
+   {
+       return m_ulData;
+   }
+
+   void SetBufferLength( ULONG length )
+   {
+       buffer_.resize( length );
+   }
+
+   std::vector< BYTE > Clone() const
+   {
+       return std::vector< BYTE >( buffer_.begin(), buffer_.begin() + GetDataLength() );
+   }
+
 protected:
-   BYTE *m_pData;
-   ULONG m_ulSize;
-   ULONG m_ulData;
-   ULONG m_cRef;
+    std::vector< BYTE > buffer_;
+    ULONG m_ulData;
 };
 
-
-///////////////////////////////////////////////////////////////////////////////
-// GetJackSubtypeForEndpoint
-//
-// Gets the subtype of the jack that the specified endpoint device is plugged
-// into.  E.g. if the endpoint is for an array mic, then we would expect the
-// subtype of the jack to be KSNODETYPE_MICROPHONE_ARRAY
-//
-///////////////////////////////////////////////////////////////////////////////
-HRESULT GetJackSubtypeForEndpoint(IMMDevice* pEndpoint, GUID* pgSubtype)
+class KinectAudioSource
 {
-    HRESULT hr = S_OK;
+public:
 
-    try {
-        if (pEndpoint == NULL)
-            return E_POINTER;
-   
-        CComPtr<IDeviceTopology>    spEndpointTopology;
-        CComPtr<IConnector>         spPlug;
-        CComPtr<IConnector>         spJack;
-        CComPtr<IPart>              spJackAsPart;
-
-        // Get the Device Topology interface
-        CHECKHR( pEndpoint->Activate(__uuidof(IDeviceTopology), CLSCTX_INPROC_SERVER, 
-                                NULL, (void**)&spEndpointTopology) );
-
-        CHECKHR( spEndpointTopology->GetConnector(0, &spPlug) );
-        CHECKHR( spPlug->GetConnectedTo( &spJack ) );
-        CHECKHR( spJack.QueryInterface( &spJackAsPart ) );
-
-        hr = spJackAsPart->GetSubType( pgSubtype );
-    }
-    catch ( std::exception& /*ex*/ ) {
-    }
-
-    return hr;
-}//GetJackSubtypeForEndpoint()
-
-///////////////////////////////////////////////////////////////////////////
-// GetMicArrayDeviceIndex
-//
-// Obtain device index corresponding to microphone array device.
-//
-// Parameters: piDevice: [out] Index of microphone array device.
-//
-// Return: S_OK if successful
-//         Failure code otherwise (e.g.: if microphone array device is not found).
-//
-///////////////////////////////////////////////////////////////////////////////
-HRESULT GetMicArrayDeviceIndex(int *piDevice)
-{
-    HRESULT hr = S_OK;
-
-    try {
-
-        CComPtr<IMMDeviceEnumerator> spEnumerator;
-        CHECKHR( spEnumerator.CoCreateInstance( __uuidof(MMDeviceEnumerator),  NULL, CLSCTX_ALL ) );
-
-        CComPtr<IMMDeviceCollection> spEndpoints;
-        CHECKHR( spEnumerator->EnumAudioEndpoints( eCapture, DEVICE_STATE_ACTIVE, &spEndpoints ) );
-
-        UINT dwCount = 0;
-        CHECKHR(spEndpoints->GetCount(&dwCount));
-
-        // Iterate over all capture devices until finding one that is a microphone array
-        *piDevice = -1;
-        for ( UINT index = 0; index < dwCount; index++) {
-            IMMDevice* spDevice;
-            CHECKHR( spEndpoints->Item( index, &spDevice ) );
-        
-            GUID subType = {0};
-            CHECKHR( GetJackSubtypeForEndpoint( spDevice, &subType ) );
-            if ( subType == KSNODETYPE_MICROPHONE_ARRAY ) {
-                *piDevice = index;
-                break;
-            }
-        }
-
-        hr = (*piDevice >= 0) ? S_OK : E_FAIL;
-    }
-    catch ( std::exception& /*ex*/ ) {
-    }
-
-    return hr;
-}
-
-///////////////////////////////////////////////////////////////////////////
-// DShowRecord
-//
-// Uses the DMO in source mode to retrieve clean audio samples and record
-// them to a .wav file.
-//
-///////////////////////////////////////////////////////////////////////////
-HRESULT DShowRecord(IMediaObject* pDMO, IPropertyStore* pPS )
-{
-	printf(("\nRecording using DMO\n"));
-
-	CComPtr<ISoundSourceLocalizer> pSC;
-	HRESULT hr;
-
-    WAVEFORMATEX wfxOut = {WAVE_FORMAT_PCM, 1, 16000, 32000, 2, 16, 0};
-    WaveAudio wave;
-    wave.Initialize( wfxOut.nSamplesPerSec, wfxOut.wBitsPerSample, wfxOut.nChannels );
-
-    DMO_OUTPUT_DATA_BUFFER OutputBufferStruct = {0};
-    DMO_MEDIA_TYPE mt = {0};
-
-    ULONG cbProduced = 0;
-    DWORD dwStatus;
-
-    CStaticMediaBuffer mediaBuffer;
-    OutputBufferStruct.pBuffer = &mediaBuffer;
-
-
-    // Set DMO output format
-    hr = MoInitMediaType(&mt, sizeof(WAVEFORMATEX));
-    CHECK_RET(hr, "MoInitMediaType failed");
-    
-    mt.majortype = MEDIATYPE_Audio;
-    mt.subtype = MEDIASUBTYPE_PCM;
-    mt.lSampleSize = 0;
-    mt.bFixedSizeSamples = TRUE;
-    mt.bTemporalCompression = FALSE;
-    mt.formattype = FORMAT_WaveFormatEx;	
-    memcpy(mt.pbFormat, &wfxOut, sizeof(WAVEFORMATEX));
-    
-    hr = pDMO->SetOutputType(0, &mt, 0); 
-    CHECK_RET(hr, "SetOutputType failed");
-    MoFreeMediaType(&mt);
-
-    // Allocate streaming resources. This step is optional. If it is not called here, it
-    // will be called when first time ProcessInput() is called. However, if you want to 
-    // get the actual frame size being used, it should be called explicitly here.
-    hr = pDMO->AllocateStreamingResources();
-    CHECK_RET(hr, "AllocateStreamingResources failed");
-    
-    // Get actually frame size being used in the DMO. (optional, do as you need)
-    int iFrameSize;
-    PROPVARIANT pvFrameSize;
-    PropVariantInit(&pvFrameSize);
-    CHECKHR(pPS->GetValue(MFPKEY_WMAAECMA_FEATR_FRAME_SIZE, &pvFrameSize));
-    iFrameSize = pvFrameSize.lVal;
-    PropVariantClear(&pvFrameSize);
-
-    // allocate output buffer
-    DWORD cOutputBufLen = wfxOut.nSamplesPerSec * wfxOut.nBlockAlign;
-    std::vector< BYTE > buffer( cOutputBufLen );
-
-    // number of frames to record
-	DWORD written = 0;
-	int totalBytes = 0;
-	
-	hr = pDMO->QueryInterface(IID_ISoundSourceLocalizer, (void**)&pSC);
-	CHECK_RET (hr, "QueryInterface for IID_ISoundSourceLocalizer failed");
-
-    // main loop to get mic output from the DMO
-    puts("\nAEC-MicArray is running ... Press \"s\" to stop\n");
-
-    while ( !_kbhit() )
+    void Initialize()
     {
-        Sleep(10); //sleep 10ms
-
-        do{
-            mediaBuffer.Init( &buffer[0], buffer.size(), 0 );
-
-            hr = pDMO->ProcessOutput(0, 1, &OutputBufferStruct, &dwStatus);
-            CHECK_RET (hr, "ProcessOutput failed. You must be rendering sound through the speakers before you start recording in order to perform echo cancellation.");
-
-            // 出力
-            DWORD written = 0;
-            hr = mediaBuffer.GetBufferAndLength(NULL, &written);
-            CHECK_RET (hr, "GetBufferAndLength failed");
-
-            wave.Output( &buffer[0], written );
-
-            // Obtain beam angle from ISoundSourceLocalizer afforded by microphone array
-			//Use a moving average to smooth this out
-        	double dBeamAngle, dAngle, dConf;	
-			hr = pSC->GetBeam(&dBeamAngle);
-			hr = pSC->GetPosition(&dAngle, &dConf);
-			if ( SUCCEEDED( hr ) ) {
-				if( dConf > 0.9 ) {
-					printf( "Position: %f\t\tBeam Angle = %f\r", dAngle, dBeamAngle );					
-				}
-			}
-
-        } while (OutputBufferStruct.dwStatus & DMO_OUTPUT_DATA_BUFFERF_INCOMPLETE);
-    }
-
-    return hr;
-}
-
-void main()
-{
-    try {
-        HRESULT hr = S_OK;
-        ::CoInitialize( NULL );
-
-        CComPtr<IMediaObject> pDMO;  
         CHECKHR( pDMO.CoCreateInstance(CLSID_CMSRKinectAudio, NULL, CLSCTX_INPROC_SERVER ) );
-
-        CComPtr<IPropertyStore> pPS;
         CHECKHR( pDMO.QueryInterface( &pPS ) );
-
-        // Set AEC-MicArray DMO system mode.
-        // This must be set for the DMO to work properly
-        PROPVARIANT pvSysMode;
-        PropVariantInit(&pvSysMode);
-        pvSysMode.vt = VT_I4;
-        //   SINGLE_CHANNEL_AEC = 0
-        //   OPTIBEAM_ARRAY_ONLY = 2
-        //   OPTIBEAM_ARRAY_AND_AEC = 4
-        //   SINGLE_CHANNEL_NSAGC = 5
-        pvSysMode.lVal = (LONG)(4);
-        CHECKHR(pPS->SetValue(MFPKEY_WMAAECMA_SYSTEM_MODE, pvSysMode));
-        PropVariantClear(&pvSysMode);
+	    CHECKHR( pDMO->QueryInterface( IID_ISoundSourceLocalizer, (void**)&pSC ) );
 
         // Tell DMO which capture device to use (we're using whichever device is a microphone array).
         // Default rendering device (speaker) will be used.
         int  iMicDevIdx = -1; 
-        hr = GetMicArrayDeviceIndex(&iMicDevIdx);
-        CHECK_RET(hr, "Failed to find microphone array device. Make sure microphone array is properly installed.");
+        CHECKHR( GetMicArrayDeviceIndex(&iMicDevIdx) );
     
         PROPVARIANT pvDeviceId;
         PropVariantInit(&pvDeviceId);
@@ -313,8 +129,231 @@ void main()
         pvDeviceId.lVal = (unsigned long)(iSpkDevIdx<<16) | (unsigned long)(0x0000ffff & iMicDevIdx);
         CHECKHR(pPS->SetValue(MFPKEY_WMAAECMA_DEVICE_INDEXES, pvDeviceId));
         PropVariantClear(&pvDeviceId);
+    }
 
-        DShowRecord( pDMO, pPS );
+    void SetSystemMode( LONG mode )
+    {
+        // Set AEC-MicArray DMO system mode.
+        // This must be set for the DMO to work properly
+        PROPVARIANT pvSysMode;
+        PropVariantInit(&pvSysMode);
+        pvSysMode.vt = VT_I4;
+        //   SINGLE_CHANNEL_AEC = 0
+        //   OPTIBEAM_ARRAY_ONLY = 2
+        //   OPTIBEAM_ARRAY_AND_AEC = 4
+        //   SINGLE_CHANNEL_NSAGC = 5
+        pvSysMode.lVal = mode;
+        CHECKHR(pPS->SetValue(MFPKEY_WMAAECMA_SYSTEM_MODE, pvSysMode));
+        PropVariantClear(&pvSysMode);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // GetJackSubtypeForEndpoint
+    //
+    // Gets the subtype of the jack that the specified endpoint device is plugged
+    // into.  E.g. if the endpoint is for an array mic, then we would expect the
+    // subtype of the jack to be KSNODETYPE_MICROPHONE_ARRAY
+    //
+    ///////////////////////////////////////////////////////////////////////////////
+    HRESULT GetJackSubtypeForEndpoint(IMMDevice* pEndpoint, GUID* pgSubtype)
+    {
+        HRESULT hr = S_OK;
+
+        try {
+            if ( pEndpoint == NULL )
+                return E_POINTER;
+   
+            CComPtr<IDeviceTopology>    spEndpointTopology;
+            CComPtr<IConnector>         spPlug;
+            CComPtr<IConnector>         spJack;
+            CComPtr<IPart>              spJackAsPart;
+
+            // Get the Device Topology interface
+            CHECKHR( pEndpoint->Activate(__uuidof(IDeviceTopology), CLSCTX_INPROC_SERVER, 
+                                    NULL, (void**)&spEndpointTopology) );
+
+            CHECKHR( spEndpointTopology->GetConnector(0, &spPlug) );
+            CHECKHR( spPlug->GetConnectedTo( &spJack ) );
+            CHECKHR( spJack.QueryInterface( &spJackAsPart ) );
+
+            hr = spJackAsPart->GetSubType( pgSubtype );
+        }
+        catch ( std::exception& /*ex*/ ) {
+        }
+
+        return hr;
+    }//GetJackSubtypeForEndpoint()
+
+    ///////////////////////////////////////////////////////////////////////////
+    // GetMicArrayDeviceIndex
+    //
+    // Obtain device index corresponding to microphone array device.
+    //
+    // Parameters: piDevice: [out] Index of microphone array device.
+    //
+    // Return: S_OK if successful
+    //         Failure code otherwise (e.g.: if microphone array device is not found).
+    //
+    ///////////////////////////////////////////////////////////////////////////////
+    HRESULT GetMicArrayDeviceIndex(int *piDevice)
+    {
+        HRESULT hr = S_OK;
+
+        try {
+
+            CComPtr<IMMDeviceEnumerator> spEnumerator;
+            CHECKHR( spEnumerator.CoCreateInstance( __uuidof(MMDeviceEnumerator),  NULL, CLSCTX_ALL ) );
+
+            CComPtr<IMMDeviceCollection> spEndpoints;
+            CHECKHR( spEnumerator->EnumAudioEndpoints( eCapture, DEVICE_STATE_ACTIVE, &spEndpoints ) );
+
+            UINT dwCount = 0;
+            CHECKHR(spEndpoints->GetCount(&dwCount));
+
+            // Iterate over all capture devices until finding one that is a microphone array
+            *piDevice = -1;
+            for ( UINT index = 0; index < dwCount; index++) {
+                IMMDevice* spDevice;
+                CHECKHR( spEndpoints->Item( index, &spDevice ) );
+        
+                GUID subType = {0};
+                CHECKHR( GetJackSubtypeForEndpoint( spDevice, &subType ) );
+                if ( subType == KSNODETYPE_MICROPHONE_ARRAY ) {
+                    *piDevice = index;
+                    break;
+                }
+            }
+
+            hr = (*piDevice >= 0) ? S_OK : E_FAIL;
+        }
+        catch ( std::exception& /*ex*/ ) {
+        }
+
+        return hr;
+    }
+
+    const WAVEFORMATEX& GetWaveFormat()
+    {
+        static const WAVEFORMATEX wfxOut = {WAVE_FORMAT_PCM, 1, 16000, 32000, 2, 16, 0};
+        return wfxOut;
+    }
+
+    void Start()
+    {
+
+        DMO_MEDIA_TYPE mt = {0};
+
+        ULONG cbProduced = 0;
+
+        memset( &OutputBufferStruct, 0, sizeof(OutputBufferStruct) );
+        OutputBufferStruct.pBuffer = &mediaBuffer;
+
+        // Set DMO output format
+        CHECKHR( MoInitMediaType(&mt, sizeof(WAVEFORMATEX)) );
+
+        mt.majortype = MEDIATYPE_Audio;
+        mt.subtype = MEDIASUBTYPE_PCM;
+        mt.lSampleSize = 0;
+        mt.bFixedSizeSamples = TRUE;
+        mt.bTemporalCompression = FALSE;
+        mt.formattype = FORMAT_WaveFormatEx;
+        memcpy(mt.pbFormat, &GetWaveFormat(), sizeof(WAVEFORMATEX));
+    
+        CHECKHR( pDMO->SetOutputType(0, &mt, 0) );
+        MoFreeMediaType(&mt);
+
+        // Allocate streaming resources. This step is optional. If it is not called here, it
+        // will be called when first time ProcessInput() is called. However, if you want to 
+        // get the actual frame size being used, it should be called explicitly here.
+        CHECKHR( pDMO->AllocateStreamingResources() );
+    
+        // Get actually frame size being used in the DMO. (optional, do as you need)
+        int iFrameSize;
+        PROPVARIANT pvFrameSize;
+        PropVariantInit(&pvFrameSize);
+        CHECKHR(pPS->GetValue(MFPKEY_WMAAECMA_FEATR_FRAME_SIZE, &pvFrameSize));
+        iFrameSize = pvFrameSize.lVal;
+        PropVariantClear(&pvFrameSize);
+
+        // allocate output buffer
+        mediaBuffer.SetBufferLength( GetWaveFormat().nSamplesPerSec * GetWaveFormat().nBlockAlign );
+    }
+
+    std::vector< BYTE > Read()
+    {
+        mediaBuffer.Clear();
+
+        do{
+            // 音声データを取得する
+            DWORD dwStatus;
+            CHECKHR( pDMO->ProcessOutput(0, 1, &OutputBufferStruct, &dwStatus) );
+
+            // ビームと音声の方向を取得する
+			CHECKHR( pSC->GetBeam(&dBeamAngle) );
+			CHECKHR( pSC->GetPosition(&dAngle, &dConf) );
+        } while ( OutputBufferStruct.dwStatus & DMO_OUTPUT_DATA_BUFFERF_INCOMPLETE );
+
+        return mediaBuffer.Clone();
+    }
+
+    double GetSoundSourcePositionConfidence() const
+    {
+        return dConf;
+    }
+
+    double GetSoundSourcePosition() const
+    {
+        return dAngle;
+    }
+    
+    double GetMicArrayBeamAngle() const
+    {
+        return dBeamAngle;
+    }
+
+    CComPtr<IMediaObject> pDMO;  
+    CComPtr<IPropertyStore> pPS;
+	CComPtr<ISoundSourceLocalizer> pSC;
+
+    CStaticMediaBuffer mediaBuffer;
+    DMO_OUTPUT_DATA_BUFFER OutputBufferStruct;
+
+    double dBeamAngle, dAngle, dConf;	
+
+private:
+
+
+};
+
+void main()
+{
+    try {
+        ::CoInitialize( NULL );
+
+        KinectAudioSource source;
+        source.Initialize();
+        source.SetSystemMode( 4 );
+
+        source.Start();
+	    printf(("\nRecording using DMO\n"));
+
+        WaveAudio wave;
+        wave.Initialize( source.GetWaveFormat().nSamplesPerSec, source.GetWaveFormat().wBitsPerSample,
+            source.GetWaveFormat().nChannels );
+
+        puts("\nAEC-MicArray is running ... Press any key to stop\n");
+
+        while ( !_kbhit() ) {
+            std::vector< BYTE > buffer = source.Read();
+            if ( buffer.size() != 0 ) {
+                wave.Output( &buffer[0], buffer.size() );
+            }
+
+            if( source.GetSoundSourcePositionConfidence() > 0.9 ) {
+                printf( "Position: %f\t\tBeam Angle = %f\r", source.GetSoundSourcePosition(),
+                    source.GetMicArrayBeamAngle() );					
+			}
+        }
 
         std::cout << std::endl;
         std::cout << "success!!" << std::endl;
