@@ -25,6 +25,7 @@
 #include <uuids.h>
 // DShowRecord‚Ì’†
 
+#include <atlbase.h>
 
 #include <MSRKinectAudio.h>
 
@@ -33,14 +34,13 @@
 #define CHECKHR(x) hr = x; if (FAILED(hr)) {printf("%d: %08X\n", __LINE__, hr); throw std::exception();}
 #define CHECK_RET(hr, message) if (FAILED(hr)) { printf("%s: %08X\n", message, hr); throw std::exception();}
 
-#define SAFE_RELEASE(p) {if (NULL != p) {(p)->Release(); (p) = NULL;}}
-
 
 #pragma comment( lib, "Msdmo.lib" )
 #pragma comment( lib, "dmoguids.lib" ) // IMediaObject
 #pragma comment( lib, "amstrmid.lib" )
 //#pragma comment( lib, "avrt.lib" )
 
+// Kinect SDK‚ÌƒTƒ“ƒvƒ‹‚©‚ç
 class CStaticMediaBuffer : public IMediaBuffer {
 public:
    CStaticMediaBuffer() {}
@@ -93,34 +93,29 @@ protected:
 HRESULT GetJackSubtypeForEndpoint(IMMDevice* pEndpoint, GUID* pgSubtype)
 {
     HRESULT hr = S_OK;
-    IDeviceTopology*    spEndpointTopology = NULL;
-    IConnector*         spPlug = NULL;
-    IConnector*         spJack = NULL;
-    IPart*            spJackAsPart = NULL;
 
     try {
         if (pEndpoint == NULL)
             return E_POINTER;
    
+        CComPtr<IDeviceTopology>    spEndpointTopology;
+        CComPtr<IConnector>         spPlug;
+        CComPtr<IConnector>         spJack;
+        CComPtr<IPart>              spJackAsPart;
+
         // Get the Device Topology interface
-        CHECKHR(pEndpoint->Activate(__uuidof(IDeviceTopology), CLSCTX_INPROC_SERVER, 
-                                NULL, (void**)&spEndpointTopology));
+        CHECKHR( pEndpoint->Activate(__uuidof(IDeviceTopology), CLSCTX_INPROC_SERVER, 
+                                NULL, (void**)&spEndpointTopology) );
 
-        CHECKHR(spEndpointTopology->GetConnector(0, &spPlug));
+        CHECKHR( spEndpointTopology->GetConnector(0, &spPlug) );
+        CHECKHR( spPlug->GetConnectedTo( &spJack ) );
+        CHECKHR( spJack.QueryInterface( &spJackAsPart ) );
 
-        CHECKHR(spPlug->GetConnectedTo(&spJack));
-
-        CHECKHR(spJack->QueryInterface(__uuidof(IPart), (void**)&spJackAsPart));
-
-        hr = spJackAsPart->GetSubType(pgSubtype);
+        hr = spJackAsPart->GetSubType( pgSubtype );
     }
-    catch ( std::exception& ex ) {
+    catch ( std::exception& /*ex*/ ) {
     }
 
-    SAFE_RELEASE(spEndpointTopology);
-    SAFE_RELEASE(spPlug);    
-    SAFE_RELEASE(spJack);    
-    SAFE_RELEASE(spJackAsPart);
     return hr;
 }//GetJackSubtypeForEndpoint()
 
@@ -138,39 +133,37 @@ HRESULT GetJackSubtypeForEndpoint(IMMDevice* pEndpoint, GUID* pgSubtype)
 HRESULT GetMicArrayDeviceIndex(int *piDevice)
 {
     HRESULT hr = S_OK;
-    UINT index, dwCount;
-    IMMDeviceEnumerator* spEnumerator = NULL;
-    IMMDeviceCollection* spEndpoints = NULL;
 
-    *piDevice = -1;
+    try {
 
-    CHECKHR(CoCreateInstance(__uuidof(MMDeviceEnumerator),  NULL, CLSCTX_ALL, __uuidof(IMMDeviceEnumerator), (void**)&spEnumerator));
+        CComPtr<IMMDeviceEnumerator> spEnumerator;
+        CHECKHR( spEnumerator.CoCreateInstance( __uuidof(MMDeviceEnumerator),  NULL, CLSCTX_ALL ) );
 
-    CHECKHR(spEnumerator->EnumAudioEndpoints(eCapture, DEVICE_STATE_ACTIVE, &spEndpoints));
+        CComPtr<IMMDeviceCollection> spEndpoints;
+        CHECKHR( spEnumerator->EnumAudioEndpoints( eCapture, DEVICE_STATE_ACTIVE, &spEndpoints ) );
 
-    CHECKHR(spEndpoints->GetCount(&dwCount));
+        UINT dwCount = 0;
+        CHECKHR(spEndpoints->GetCount(&dwCount));
 
-    // Iterate over all capture devices until finding one that is a microphone array
-    for (index = 0; index < dwCount; index++)
-    {
-        IMMDevice* spDevice;
-
-        CHECKHR(spEndpoints->Item(index, &spDevice));
+        // Iterate over all capture devices until finding one that is a microphone array
+        *piDevice = -1;
+        for ( UINT index = 0; index < dwCount; index++) {
+            IMMDevice* spDevice;
+            CHECKHR( spEndpoints->Item( index, &spDevice ) );
         
-        GUID subType = {0};
-        CHECKHR(GetJackSubtypeForEndpoint(spDevice, &subType));
-        if (subType == KSNODETYPE_MICROPHONE_ARRAY)
-        {
-            *piDevice = index;
-            break;
+            GUID subType = {0};
+            CHECKHR( GetJackSubtypeForEndpoint( spDevice, &subType ) );
+            if ( subType == KSNODETYPE_MICROPHONE_ARRAY ) {
+                *piDevice = index;
+                break;
+            }
         }
+
+        hr = (*piDevice >= 0) ? S_OK : E_FAIL;
+    }
+    catch ( std::exception& /*ex*/ ) {
     }
 
-    hr = (*piDevice >=0) ? S_OK : E_FAIL;
-
-exit:
-    SAFE_RELEASE(spEnumerator);
-    SAFE_RELEASE(spEndpoints);    
     return hr;
 }
 
@@ -185,7 +178,7 @@ HRESULT DShowRecord(IMediaObject* pDMO, IPropertyStore* pPS )
 {
 	printf(("\nRecording using DMO\n"));
 
-	ISoundSourceLocalizer* pSC = NULL;
+	CComPtr<ISoundSourceLocalizer> pSC;
 	HRESULT hr;
 
     WAVEFORMATEX wfxOut = {WAVE_FORMAT_PCM, 1, 16000, 32000, 2, 16, 0};
@@ -277,24 +270,20 @@ HRESULT DShowRecord(IMediaObject* pDMO, IPropertyStore* pPS )
         } while (OutputBufferStruct.dwStatus & DMO_OUTPUT_DATA_BUFFERF_INCOMPLETE);
     }
 
-
-exit:
-	SAFE_RELEASE(pSC);
-
     return hr;
 }
 
 void main()
 {
-    IMediaObject* pDMO = NULL;  
-    IPropertyStore* pPS = NULL;
-
     try {
         HRESULT hr = S_OK;
         ::CoInitialize( NULL );
 
-        CHECKHR( CoCreateInstance(CLSID_CMSRKinectAudio, NULL, CLSCTX_INPROC_SERVER, IID_IMediaObject, (void**)&pDMO) );
-        CHECKHR( pDMO->QueryInterface(IID_IPropertyStore, (void**)&pPS) );
+        CComPtr<IMediaObject> pDMO;  
+        CHECKHR( pDMO.CoCreateInstance(CLSID_CMSRKinectAudio, NULL, CLSCTX_INPROC_SERVER ) );
+
+        CComPtr<IPropertyStore> pPS;
+        CHECKHR( pDMO.QueryInterface( &pPS ) );
 
         // Set AEC-MicArray DMO system mode.
         // This must be set for the DMO to work properly
@@ -333,7 +322,4 @@ void main()
     catch ( std::exception& ex ) {
         std::cout << ex.what() << std::endl;
     }
-
-    SAFE_RELEASE(pDMO);
-    SAFE_RELEASE(pPS);
 }

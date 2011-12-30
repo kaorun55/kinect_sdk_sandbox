@@ -19,7 +19,7 @@ public:
     {
         waveOutPause( hWaveOut );
 
-        for ( int i = 0; i < waveHeaders_.size(); ++i ) {
+        for ( size_t i = 0; i < waveHeaders_.size(); ++i ) {
             delete[] waveHeaders_[i].lpData;
         }
     }
@@ -47,7 +47,7 @@ public:
         waveHeaders_.resize( audioBufferCount_ );
         memset( &waveHeaders_[0], 0, sizeof(WAVEHDR) * waveHeaders_.size() );
 
-        for ( int i = 0; i < waveHeaders_.size(); ++i ) {
+        for ( size_t i = 0; i < waveHeaders_.size(); ++i ) {
             waveHeaders_[i].lpData = new char[MAX_BUFFER_SIZE];
             waveHeaders_[i].dwUser = i;
             waveHeaders_[i].dwFlags = WHDR_DONE;
