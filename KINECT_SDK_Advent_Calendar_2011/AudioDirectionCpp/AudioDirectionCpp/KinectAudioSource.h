@@ -14,13 +14,11 @@
 
 #include <MSRKinectAudio.h>
 
-#include "StaticMediaBuffer.h"
+#include "StaticmediaBuffer.h"
 
 #pragma comment( lib, "Msdmo.lib" )
 #pragma comment( lib, "dmoguids.lib" ) // IMediaObject
 #pragma comment( lib, "amstrmid.lib" )
-//#pragma comment( lib, "avrt.lib" )
-
 
 class KinectAudioSource
 {
@@ -43,35 +41,35 @@ public:
 
     double GetSoundSourcePositionConfidence() const
     {
-        return dConf;
+        return soundSourcePositionConfidence_;
     }
 
     double GetSoundSourcePosition() const
     {
-        return dAngle;
+        return soundSourcePosition_;
     }
     
     double GetMicArrayBeamAngle() const
     {
-        return dBeamAngle;
+        return beamAngle_;
     }
 
 private:
     
-    HRESULT GetJackSubtypeForEndpoint(IMMDevice* pEndpoint, GUID* pgSubtype);
-    HRESULT GetMicArrayDeviceIndex(int *piDevice);
+    GUID GetJackSubtypeForEndpoint( IMMDevice* pEndpoint );
+    int GetMicArrayDeviceIndex();
 
 private:
 
-    CComPtr<IMediaObject> pDMO;  
-    CComPtr<IPropertyStore> pPS;
-	CComPtr<ISoundSourceLocalizer> pSC;
+    CComPtr<IMediaObject> mediaObject_;  
+    CComPtr<IPropertyStore> propertyStore_;
+	CComPtr<ISoundSourceLocalizer> soundSource_;
 
-    CStaticMediaBuffer mediaBuffer;
-    DMO_OUTPUT_DATA_BUFFER OutputBufferStruct;
+    CStaticmediaBuffer mediaBuffer_;
+    DMO_OUTPUT_DATA_BUFFER outputBufferStruct_;
 
-    double dBeamAngle;
-    double dAngle;
-    double dConf;	
+    double beamAngle_;
+    double soundSourcePosition_;
+    double soundSourcePositionConfidence_;	
 };
 

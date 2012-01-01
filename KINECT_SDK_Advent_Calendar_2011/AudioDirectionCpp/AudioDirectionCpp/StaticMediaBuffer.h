@@ -5,9 +5,9 @@
 #include <vector>
 
 // Kinect SDK‚ÌƒTƒ“ƒvƒ‹‚©‚ç
-class CStaticMediaBuffer : public IMediaBuffer {
+class CStaticmediaBuffer : public IMediaBuffer {
 public:
-   CStaticMediaBuffer() {}
+   CStaticmediaBuffer() {}
    STDMETHODIMP_(ULONG) AddRef() { return 2; }
    STDMETHODIMP_(ULONG) Release() { return 1; }
    STDMETHODIMP QueryInterface(REFIID riid, void **ppv) {

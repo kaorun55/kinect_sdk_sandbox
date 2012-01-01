@@ -1,7 +1,5 @@
 #include <conio.h>
-
 #include <iostream>
-
 
 #include "WaveAudio.h"
 #include "KinectAudioSource.h"
