@@ -22,6 +22,8 @@ namespace Audio
                     byte[] buffer = new byte[4096];
                     Win32.StreamingWavePlayer player = new Win32.StreamingWavePlayer( 16000, 16, 1, 100 );
                     while ( !Console.KeyAvailable ) {
+                        var a = audioStream.Position;
+                        var b = audioStream.Seek( 0, SeekOrigin.Current );
                         int count = audioStream.Read( buffer, 0, buffer.Length );
                         player.Output( buffer );
                     }
