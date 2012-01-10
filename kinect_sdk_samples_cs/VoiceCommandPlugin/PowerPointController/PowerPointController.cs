@@ -6,7 +6,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace SpeechRecognizer
+namespace kaorun55
 {
     public class PowerPointController
     {

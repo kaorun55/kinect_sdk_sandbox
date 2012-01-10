@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.Speech.AudioFormat;
 using Microsoft.Speech.Recognition;
 
-namespace SpeechRecognizer
+namespace kaorun55
 {
     public class Recognizer
     {

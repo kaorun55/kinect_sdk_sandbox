@@ -8,7 +8,7 @@
     <ProjectGuid>{B60032AE-8A2B-4671-9368-5864FA189107}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SpeechRecognizer</RootNamespace>
+    <RootNamespace>kaorun55</RootNamespace>
     <AssemblyName>SpeechRecognizer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

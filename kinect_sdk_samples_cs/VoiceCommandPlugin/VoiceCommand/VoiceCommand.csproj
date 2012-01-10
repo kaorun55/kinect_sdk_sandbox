@@ -8,7 +8,7 @@
     <ProjectGuid>{A69E4469-9B2C-4211-B6AD-047FF9EF59AF}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VoiceCommand</RootNamespace>
+    <RootNamespace>kaorun55</RootNamespace>
     <AssemblyName>VoiceCommand</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>

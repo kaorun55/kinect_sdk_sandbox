@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SpeechRecognizer;
+using kaorun55;
 
-namespace VoiceCommand
+namespace kaorun55
 {
     public class PowerPointPlugin : VoiceCommandPlugin
     {

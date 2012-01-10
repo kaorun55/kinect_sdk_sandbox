@@ -2,65 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Reflection;
-using System.IO;
-using System.Diagnostics;
 using Microsoft.Research.Kinect.Audio;
 using Microsoft.Speech.Recognition;
 using kaorun55;
+using System.IO;
 using Microsoft.Speech.AudioFormat;
 
-namespace kaorun55
+namespace BasicVoiceController
 {
     class Program
     {
-        static MicroThread mt = new MicroThread();
+        static PowerPointController ppt = new PowerPointController();
 
         static void Main( string[] args )
         {
             try {
-                var dlls = Directory.EnumerateFiles( @"../../../plugin", @"*.dll" );
-                foreach ( var dll in dlls ) {
-                    Console.WriteLine( Path.GetFileName( dll ) );
-                    foreach ( var app in VoiceCommandPluginHost.GetInstance( dll ) ) {
-                        mt.AddApp( app );
-                    }
-                }
-
-
-                #region Test
-#if false
-                mt.DoWork( "powerpoint" );
-                mt.DoWork( "next" );
-
-                mt.DoWork( "powerpoint" );
-                mt.DoWork( "close" );
-
-                mt.DoWork( "powerpoint" );
-                mt.DoWork( "prev" );
-
-                mt.DoWork( "powerpoint" );
-
-                mt.DoWork( "explorer" );
-                mt.DoWork( "close" );
-
-
-                mt.DoWork( "powerpoint" );
-                mt.DoWork( "prev" );
-#endif
-                #endregion
-
                 using ( var source = new KinectAudioSource() ) {
                     source.FeatureMode = true;
                     source.AutomaticGainControl = false; //Important to turn this off for speech recognition
                     source.SystemMode = SystemMode.OptibeamArrayOnly; //No AEC for this sample
 
                     var colors = new Choices();
-                    foreach ( var app in mt.Apps ) {
-                        foreach ( var command in app ) {
-                            Console.WriteLine( command );
-                            colors.Add( command );
-                        }
+                    foreach ( var command in new string[] { "かいし", "しゅうりょう", "つぎ", "まえ" } ) {
+                        Console.WriteLine( command );
+                        colors.Add( command );
                     }
 
                     Recognizer r = new Recognizer( "ja-JP", colors );
@@ -80,7 +45,6 @@ namespace kaorun55
                         r.RecognizeAsyncStop();
                     }
                 }
-
             }
             catch ( Exception ex ) {
                 Console.WriteLine( ex.Message );
@@ -101,7 +65,20 @@ namespace kaorun55
         {
             try {
                 Console.WriteLine( "\nSpeech Recognized: \t{0}", e.Result.Text );
-                mt.DoWork( e.Result.Text );
+                switch ( e.Result.Text ) {
+                case "かいし":
+                    ppt.FindSlideShow();
+                    break;
+                case "しゅうりょう":
+                    ppt.End();
+                    break;
+                case "つぎ":
+                    ppt.Next();
+                    break;
+                case "まえ":
+                    ppt.Prev();
+                    break;
+                }
             }
             catch ( Exception ex ) {
                 Console.WriteLine( ex.Message );
