@@ -7,23 +7,35 @@ using Microsoft.Speech.Recognition;
 using kaorun55;
 using System.IO;
 using Microsoft.Speech.AudioFormat;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace BasicVoiceController
 {
     class Program
     {
         static PowerPointController ppt = new PowerPointController();
+        static VisualStudioVoiceController vs = new VisualStudioVoiceController();
+        static CommandPromptVoiceController prompt = new CommandPromptVoiceController();
 
         static void Main( string[] args )
         {
             try {
+                string path = @"file:\\\" + Assembly.GetEntryAssembly().Location;
+                Debug.WriteLine( path );
+                path.Replace( '\\', '/' );
+                prompt.WindowsTitile = path;
+                Debug.WriteLine( prompt.WindowsTitile );
+
                 using ( var source = new KinectAudioSource() ) {
                     source.FeatureMode = true;
                     source.AutomaticGainControl = false; //Important to turn this off for speech recognition
                     source.SystemMode = SystemMode.OptibeamArrayOnly; //No AEC for this sample
 
                     var colors = new Choices();
-                    foreach ( var command in new string[] { "かいし", "しゅうりょう", "つぎ", "まえ" } ) {
+                    foreach ( var command in new string[] { "かいし", "しゅうりょう", "つぎ", "まえ",
+                                                            "びじゅあるすたじお", "びるど", "でばっぐ",
+                                                            "ぷろんぷと", "いぐじっと"} ) {
                         Console.WriteLine( command );
                         colors.Add( command );
                     }
@@ -77,6 +89,23 @@ namespace BasicVoiceController
                     break;
                 case "まえ":
                     ppt.Prev();
+                    break;
+
+                case "びじゅあるすたじお":
+                    vs.FindVisualStudio();
+                    break;
+                case "びるど":
+                    vs.Build();
+                    break;
+                case "でばっぐ":
+                    vs.Debug();
+                    break;
+
+                case "ぷろんぷと":
+                    prompt.FindPrompt();
+                    break;
+                case "いぐじっと":
+                    prompt.Exit();
                     break;
                 }
             }

@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeechRecognizer", "SpeechR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicVoiceController", "..\BasicVoiceController\BasicVoiceController.csproj", "{B3E4EC96-DF8E-4551-8B5E-6994B1C7065F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualStudioVoiceController", "VisualStudioVoiceController\VisualStudioVoiceController.csproj", "{07045F4A-28C0-4475-BB54-AD1910035033}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandPromptVoiceController", "CommandPromptVoiceController\CommandPromptVoiceController.csproj", "{B5071108-09C1-4770-8EB1-F05441650758}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +87,26 @@ Global
 		{B3E4EC96-DF8E-4551-8B5E-6994B1C7065F}.Release|Mixed Platforms.Build.0 = Release|x86
 		{B3E4EC96-DF8E-4551-8B5E-6994B1C7065F}.Release|x86.ActiveCfg = Release|x86
 		{B3E4EC96-DF8E-4551-8B5E-6994B1C7065F}.Release|x86.Build.0 = Release|x86
+		{07045F4A-28C0-4475-BB54-AD1910035033}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07045F4A-28C0-4475-BB54-AD1910035033}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07045F4A-28C0-4475-BB54-AD1910035033}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{07045F4A-28C0-4475-BB54-AD1910035033}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{07045F4A-28C0-4475-BB54-AD1910035033}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{07045F4A-28C0-4475-BB54-AD1910035033}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07045F4A-28C0-4475-BB54-AD1910035033}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07045F4A-28C0-4475-BB54-AD1910035033}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{07045F4A-28C0-4475-BB54-AD1910035033}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{07045F4A-28C0-4475-BB54-AD1910035033}.Release|x86.ActiveCfg = Release|Any CPU
+		{B5071108-09C1-4770-8EB1-F05441650758}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5071108-09C1-4770-8EB1-F05441650758}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5071108-09C1-4770-8EB1-F05441650758}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B5071108-09C1-4770-8EB1-F05441650758}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B5071108-09C1-4770-8EB1-F05441650758}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B5071108-09C1-4770-8EB1-F05441650758}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5071108-09C1-4770-8EB1-F05441650758}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5071108-09C1-4770-8EB1-F05441650758}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B5071108-09C1-4770-8EB1-F05441650758}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B5071108-09C1-4770-8EB1-F05441650758}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -55,6 +55,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VoiceCommandPlugin\CommandPromptVoiceController\CommandPromptVoiceController.csproj">
+      <Project>{B5071108-09C1-4770-8EB1-F05441650758}</Project>
+      <Name>CommandPromptVoiceController</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VoiceCommandPlugin\PowerPointController\PowerPointController.csproj">
       <Project>{47A7AC95-4487-482C-AEA5-24419052D8A1}</Project>
       <Name>PowerPointController</Name>
@@ -62,6 +66,14 @@
     <ProjectReference Include="..\VoiceCommandPlugin\SpeechRecognizer\SpeechRecognizer.csproj">
       <Project>{B60032AE-8A2B-4671-9368-5864FA189107}</Project>
       <Name>SpeechRecognizer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VoiceCommandPlugin\VisualStudioVoiceController\VisualStudioVoiceController.csproj">
+      <Project>{07045F4A-28C0-4475-BB54-AD1910035033}</Project>
+      <Name>VisualStudioVoiceController</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VoiceCommandPlugin\VoiceCommand\VoiceCommand.csproj">
+      <Project>{A69E4469-9B2C-4211-B6AD-047FF9EF59AF}</Project>
+      <Name>VoiceCommand</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
