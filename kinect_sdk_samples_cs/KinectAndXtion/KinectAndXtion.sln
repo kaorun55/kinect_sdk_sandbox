@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectAndXtion", "KinectAndXtion.csproj", "{2851F922-88D2-4BE2-ADA6-B810ADE4A586}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2851F922-88D2-4BE2-ADA6-B810ADE4A586}.Debug|x86.ActiveCfg = Debug|x86
+		{2851F922-88D2-4BE2-ADA6-B810ADE4A586}.Debug|x86.Build.0 = Debug|x86
+		{2851F922-88D2-4BE2-ADA6-B810ADE4A586}.Release|x86.ActiveCfg = Release|x86
+		{2851F922-88D2-4BE2-ADA6-B810ADE4A586}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

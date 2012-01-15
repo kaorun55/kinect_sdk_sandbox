@@ -1,0 +1,12 @@
+﻿<Window x:Class="KinectAndXtion.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="312" Width="702" Closing="Window_Closing">
+    <Grid>
+        <Image Height="240" HorizontalAlignment="Left" Name="imageKinectSDK" Stretch="Fill" VerticalAlignment="Top" Width="320
+               " Margin="0,34,0,0" />
+        <Image Height="240" HorizontalAlignment="Left" Margin="360,34,0,0" Name="imageOpenNI" Stretch="Fill" VerticalAlignment="Top" Width="320" />
+        <Label Content="Kinect &amp; Kinect SDK" Height="39" HorizontalAlignment="Left" Name="label1" VerticalAlignment="Top" Width="320" HorizontalContentAlignment="Center" FontSize="18" />
+        <Label Content="Xtion &amp; OpenNI" Height="39" HorizontalAlignment="Right" Name="label2" VerticalAlignment="Top" Width="320" HorizontalContentAlignment="Center" FontSize="18" />
+    </Grid>
+</Window>
