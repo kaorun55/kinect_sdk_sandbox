@@ -1,14 +1,13 @@
 ﻿#include <iostream>
 #include <stdexcept>
 
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
-
-#include <XnCppWrapper.h>
-
 // MSR_NuiApi.hの前にWindows.hをインクルードする
 #include <Windows.h>
 #include <MSR_NuiApi.h>
+
+#include <opencv2/opencv.hpp>
+
+#include <XnCppWrapper.h>
 
 // 設定ファイルのパス(環境に合わせて変更してください)
 const char* CONFIG_XML_PATH = "SamplesConfig.xml";
