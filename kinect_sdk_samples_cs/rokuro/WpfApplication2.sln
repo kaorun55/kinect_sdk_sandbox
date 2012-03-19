@@ -3,16 +3,38 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApplication2", "WpfApplication2.csproj", "{C561A551-BE23-45B2-81C6-106D9FF4A736}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Geis.Win32", "Geis.Win32\Geis.Win32.vcxproj", "{6E4196F6-9CC4-4BDE-9E6E-C9CD28F43A52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|Win32 = Debug|Win32
 		Debug|x86 = Debug|x86
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|Win32 = Release|Win32
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C561A551-BE23-45B2-81C6-106D9FF4A736}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{C561A551-BE23-45B2-81C6-106D9FF4A736}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{C561A551-BE23-45B2-81C6-106D9FF4A736}.Debug|Win32.ActiveCfg = Debug|x86
 		{C561A551-BE23-45B2-81C6-106D9FF4A736}.Debug|x86.ActiveCfg = Debug|x86
 		{C561A551-BE23-45B2-81C6-106D9FF4A736}.Debug|x86.Build.0 = Debug|x86
+		{C561A551-BE23-45B2-81C6-106D9FF4A736}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{C561A551-BE23-45B2-81C6-106D9FF4A736}.Release|Mixed Platforms.Build.0 = Release|x86
+		{C561A551-BE23-45B2-81C6-106D9FF4A736}.Release|Win32.ActiveCfg = Release|x86
 		{C561A551-BE23-45B2-81C6-106D9FF4A736}.Release|x86.ActiveCfg = Release|x86
 		{C561A551-BE23-45B2-81C6-106D9FF4A736}.Release|x86.Build.0 = Release|x86
+		{6E4196F6-9CC4-4BDE-9E6E-C9CD28F43A52}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{6E4196F6-9CC4-4BDE-9E6E-C9CD28F43A52}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{6E4196F6-9CC4-4BDE-9E6E-C9CD28F43A52}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6E4196F6-9CC4-4BDE-9E6E-C9CD28F43A52}.Debug|Win32.Build.0 = Debug|Win32
+		{6E4196F6-9CC4-4BDE-9E6E-C9CD28F43A52}.Debug|x86.ActiveCfg = Debug|Win32
+		{6E4196F6-9CC4-4BDE-9E6E-C9CD28F43A52}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{6E4196F6-9CC4-4BDE-9E6E-C9CD28F43A52}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{6E4196F6-9CC4-4BDE-9E6E-C9CD28F43A52}.Release|Win32.ActiveCfg = Release|Win32
+		{6E4196F6-9CC4-4BDE-9E6E-C9CD28F43A52}.Release|Win32.Build.0 = Release|Win32
+		{6E4196F6-9CC4-4BDE-9E6E-C9CD28F43A52}.Release|x86.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
